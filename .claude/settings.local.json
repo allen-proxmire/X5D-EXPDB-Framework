@@ -23,7 +23,15 @@
       "Bash(python -c \":*)",
       "Read(//c/Users/allen/GitHub/**)",
       "Bash(mv \"EXPDB 5D Polyhedral\" \"X5D EXPDB Framework\")",
-      "Bash(echo \"exit=$?\")"
+      "Bash(echo \"exit=$?\")",
+      "Bash(mkdir -p framework/methodology/core framework/methodology/process docs)",
+      "Bash(mv from_AD/ad_core/*.md framework/methodology/core/)",
+      "Bash(mv from_AD/ad_process/*.md framework/methodology/process/)",
+      "Bash(mv from_AD/docs/AD_FAQ.md from_AD/docs/AD_methodology.md from_AD/docs/AD_overview.md docs/)",
+      "Bash(mv from_AD/README.md docs/AD_original_README.md)",
+      "Bash(rm -rf from_AD/ad_examples from_AD/LICENSE)",
+      "Bash(rmdir from_AD/ad_core from_AD/ad_process from_AD/docs)",
+      "Bash(rmdir from_AD)"
     ]
   }
 }

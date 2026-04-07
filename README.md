@@ -25,21 +25,35 @@ landscape.
 ├── .gitignore
 │
 ├── framework/                       The X5D framework specification
-│   └── X5D_Framework.md
+│   ├── X5D_Framework.md
+│   └── methodology/                 Architectural Distillation methodology
+│       ├── core/                    Concept docs (principles, pipeline,
+│       │                            geometry, invariants, examples overview)
+│       └── process/                 Six-step AD process (step1 … step6)
 │
-├── examples/                        Worked examples of the X5D framework
+├── docs/                            Methodology overview, FAQ, archived
+│   ├── AD_overview.md               original AD README
+│   ├── AD_methodology.md
+│   ├── AD_FAQ.md
+│   └── AD_original_README.md
+│
+├── examples/                        Worked examples
 │   ├── README.md
-│   └── expdb/                       X5D-EXPDB
-│       ├── README.md
-│       ├── X5D_EXPDB_Reinterpretation.md
-│       ├── invariant.md
-│       ├── NEXT_STEPS.md
-│       └── analysis/                Empirical Guth–Maynard analysis
-│           ├── README.md
-│           ├── GuthMaynard_BindingConstraints.md
-│           ├── GuthMaynard_EXPDB_Analysis.md
-│           ├── GuthMaynard_Pipeline_Report.txt
-│           └── figures/
+│   ├── expdb/                       X5D-EXPDB (the headline example)
+│   │   ├── README.md
+│   │   ├── X5D_EXPDB_Reinterpretation.md
+│   │   ├── invariant.md
+│   │   ├── NEXT_STEPS.md
+│   │   └── analysis/                Empirical Guth–Maynard analysis
+│   │       ├── README.md
+│   │       ├── GuthMaynard_BindingConstraints.md
+│   │       ├── GuthMaynard_EXPDB_Analysis.md
+│   │       ├── GuthMaynard_Pipeline_Report.txt
+│   │       └── figures/
+│   ├── example_PDE_Atlas/           14 PDEs evaluated by AD methodology
+│   │   └── README.md
+│   ├── example_EGS_Skyline/         Erdős–Guy–Selfridge skyline notes
+│   └── FactorSkyline_Evaluation_EventDensity.md
 │
 └── compute/                         Computational pipeline
     ├── README.md
@@ -62,6 +76,14 @@ landscape.
   — the architectural language: channels, envelopes, constraint surfaces,
   six evaluation criteria, the seven structural poles.
 
+- **The methodology**:
+  [`framework/methodology/`](framework/methodology/) — the upstream
+  Architectural Distillation methodology that the X5D framework
+  instantiates: five concept docs in [`core/`](framework/methodology/core/)
+  and the six-step AD process in [`process/`](framework/methodology/process/).
+  See also [`docs/AD_overview.md`](docs/AD_overview.md) and
+  [`docs/AD_methodology.md`](docs/AD_methodology.md).
+
 - **The X5D-EXPDB reinterpretation**:
   [`examples/expdb/`](examples/expdb/) — the master polytope
   \( \mathcal{P} \subset \mathbb{R}^5 \), the projection/envelope ladder,
@@ -72,6 +94,11 @@ landscape.
   [`examples/expdb/analysis/`](examples/expdb/analysis/) — binding
   constraints and sensitivity after Guth–Maynard (2024).
 
+- **The PDE Atlas**:
+  [`examples/example_PDE_Atlas/`](examples/example_PDE_Atlas/) — 14 major
+  nonlinear PDEs evaluated through the AD methodology (Allen–Cahn,
+  Burgers, Cahn–Hilliard, Navier–Stokes, Ricci flow, …).
+
 - **Computational pipeline**: [`compute/`](compute/) — runnable Python
   scripts that compute \( A(\sigma) \), \( A^*(\sigma) \), \( \theta \),
   and the figures.
@@ -81,6 +108,9 @@ landscape.
 ## Status
 
 Active research repository. The X5D framework is described in
-`framework/X5D_Framework.md`. X5D-EXPDB is the first complete worked
-example. Additional examples (Erdős–Guy–Selfridge, Erdős discrepancy)
-are forthcoming.
+`framework/X5D_Framework.md`, and the underlying Architectural
+Distillation methodology lives in `framework/methodology/`. X5D-EXPDB
+is the first complete worked example; the PDE Atlas (14 PDEs) provides
+a second family of worked examples through the AD methodology.
+Additional examples (Erdős discrepancy, expanded EGS skyline) are
+in progress.
