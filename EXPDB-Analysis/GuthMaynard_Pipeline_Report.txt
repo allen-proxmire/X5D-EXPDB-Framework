@@ -1,0 +1,204 @@
+========================================================================
+EXPDB FULL PIPELINE BOTTLENECK REPORT
+After Guth-Maynard (2024)
+========================================================================
+Generated from the actual EXPDB codebase (teorth/expdb) with a
+scipy-based replacement for pycddlib.  The A(sigma) and A*(sigma)
+functions are computed from the full EXPDB literature set (482
+hypotheses), including all Guth-Maynard LVE, LVER, and ZDE
+constraints, plus the Tao-Trudgian-Yang (2024) derived estimates.
+
+========================================================================
+1. UPDATED theta AND sigma*
+========================================================================
+
+  theta_PNTALL  = 17/30 = 0.56667  (prime gap exponent)
+  sigma*        = 7/10 = 0.70000   (binding sigma)
+  ||A||_infty   = 30/13 = 2.30769  (zero-density supremum)
+  Delta(theta)  = 1/60 = 0.01667   (improvement over Huxley)
+
+  The Ingham relation:  theta = 1 - 1/||A||_infty
+  where  ||A||_infty = sup_{sigma in (1/2,1)} A(sigma).
+
+  theta_GAPSQUARE = 1.480  (mean-square gap exponent, from alpha/beta)
+
+========================================================================
+2. BINDING CONSTRAINTS WITH SOURCES
+========================================================================
+
+  At sigma* = 0.70, the binding constraint is the CROSSOVER point
+  of two ZD estimates:
+
+  (a) Ingham (1940): A(sigma) = 3/(2 - sigma)
+      At sigma = 0.70:  A = 3/1.3 = 30/13 = 2.3077
+
+  (b) Guth-Maynard (2024): A(sigma) = 15/(5*sigma + 3)
+      At sigma = 0.70:  A = 15/6.5 = 30/13 = 2.3077
+
+  These two curves CROSS at sigma = 7/10, both giving A = 30/13.
+  For sigma < 0.70: Ingham is tighter (A is increasing in sigma).
+  For sigma > 0.70: GM is tighter (A is decreasing in sigma).
+
+  The supremum ||A||_infty = 30/13 is achieved at this crossover.
+
+  BINDING:
+    1. Guth-Maynard (2024) ZD estimate: A <= 15/(5s+3) on [7/10, 19/25)
+    2. Ingham (1940) ZD estimate: A <= 3/(2-s) on [1/2, 7/10)
+       (These meet at sigma = 7/10 with A = 30/13)
+
+  SLACK:
+    3. Ivic (2003) ZD estimate: binding on [19/25, ~0.78), A < 2.21
+    4. Tao-Trudgian-Yang (2024): binding on several intervals, sigma~0.78-0.90
+    5. Ivic (1980): binding on [0.80, 0.88)
+    6. Pintz (2023): binding near sigma -> 1
+    7. Huxley (1972): A <= 12(1-s)/5 -- COMPLETELY SLACK (superseded by GM)
+    8. Montgomery (1971): A <= 5(1-s)/2 -- COMPLETELY SLACK
+    9. Heath-Brown (1979): A <= 9(1-s)/4 -- COMPLETELY SLACK
+
+========================================================================
+3. RANKED BOTTLENECKS WITH SENSITIVITIES
+========================================================================
+
+  For theta_PNTALL:
+  -----------------
+  There is only ONE lever: improve ||A||_infty.
+
+  d(theta)/d(||A||_infty) = 1/||A||_infty^2 = 169/900 = 0.1878
+
+  Per 0.01 improvement in ||A||_infty:  Delta(theta) = 0.0019
+  Per 0.10 improvement in ||A||_infty:  Delta(theta) = 0.0197
+
+  Projection toward Density Hypothesis (||A||_infty = 2):
+    ||A||_infty = 2.2  -->  theta = 0.5455  (need new LVE)
+    ||A||_infty = 2.1  -->  theta = 0.5238  (deep improvement)
+    ||A||_infty = 2.0  -->  theta = 0.5000  (Density Hypothesis)
+    Gap remaining: 0.3077
+
+  For theta_GAPSQUARE:
+  --------------------
+  Two levers:
+
+  Rank 1: A*(sigma) at high sigma (B/A ratio ~ 28 at sigma ~ 0.999)
+    Source: Heath-Brown (1979) energy estimate, A* = 12/(4s-1)
+    Sensitivity: d(GAPSQUARE)/d(B) = +0.134 per unit
+    Action: new additive energy estimates or ZDE bounds
+
+  Rank 2: A(sigma) at high sigma
+    Source: Pintz (2023) ZD estimate near sigma -> 1
+    Sensitivity: d(GAPSQUARE)/d(A) = -0.133 per unit
+    Action: tighter ZD estimates near sigma = 1
+
+  Leverage ratio: |dGS/dB| / |dGS/dA| = 1.005
+  The two levers are ALMOST EQUALLY IMPORTANT for GAPSQUARE.
+
+========================================================================
+4. WHETHER alpha OR beta IS BINDING
+========================================================================
+
+  For theta_PNTALL:
+    Neither alpha nor beta is relevant.  The Ingham relation
+    theta = 1 - 1/||A||_infty does not involve A*(sigma).
+
+  For theta_GAPSQUARE:
+    ALPHA is binding (not beta) at the optimal sigma.
+    alpha dominates at high sigma where B >> A.
+    The alpha formula:
+      alpha(s) = 4s - 2 + 2(B(1-s) - 1)/(B - A)
+    approaches 4s - 2 + 2(1-s) = 2s as B/A -> infinity,
+    which is maximized at sigma -> 1.
+
+========================================================================
+5. WHETHER THE BOTTLENECK IS NOW IN THE ENERGY PROJECTION
+========================================================================
+
+  SHORT ANSWER: NO (for the prime gap exponent).
+
+  For theta_PNTALL (the primary result), the bottleneck is
+  ENTIRELY in the LV projection.  A*(sigma) does not appear.
+
+  For theta_GAPSQUARE (the secondary result), the bottleneck
+  is SPLIT between the LV and energy projections.  The
+  sensitivities d(GS)/d(A) and d(GS)/d(B) are nearly equal,
+  meaning improvements to EITHER A or A* would help.
+
+  The energy estimate A*(sigma) = 12/(4sigma - 1) on [5/6, 1)
+  from Heath-Brown (1979) has been unchanged for 45 years.
+  Improving it would tighten GAPSQUARE but NOT theta_PNTALL.
+
+========================================================================
+6. HOW GM RESHAPED P
+========================================================================
+
+  The 5D polytope P in (sigma, tau, rho, rho*, s):
+
+  BEFORE GM:
+    The face of P in the rho-direction near sigma ~ 0.7 was
+    determined by Huxley's LVE and related estimates.
+    The binding ||A||_infty = 12/5 = 2.40 was achieved at
+    sigma ~ 5/7 = 0.714, the crossover of Ingham and Huxley.
+
+  AFTER GM:
+    GM adds new half-spaces to P:
+    (a) Three LV constraints in (sigma, tau, rho)
+    (b) Twenty iterated LV constraints (K = 1..20)
+    (c) Three LVER constraints in full 5D (sigma,tau,rho,rho*,s)
+
+    The GM LVE face replaces the Huxley face for all sigma > 0.70.
+    The crossover point shifts from sigma ~ 0.714 (Ingham-Huxley)
+    to sigma = 0.700 (Ingham-GM).
+
+    ||A||_infty decreases from 12/5 to 30/13.
+    theta_PNTALL decreases from 7/12 to 17/30.
+
+  GEOMETRIC PICTURE:
+    In the (sigma, A(sigma)) plane, A(sigma) looks like an inverted V:
+    - Rising limb: A(sigma) = 3/(2-sigma) [Ingham, concave up]
+    - Peak: A = 30/13 at sigma = 7/10
+    - Falling limb: A(sigma) = 15/(5sigma+3) [GM, concave down]
+    - Then passes through Ivic, TTY, Pintz bounds as sigma -> 1
+
+    GM shaved the peak from 12/5 down to 30/13.
+    The peak is now a CUSP: two curves meeting at a point.
+    The next improvement requires either:
+    (i) A new LVE that beats GM to the RIGHT of sigma = 0.70
+    (ii) A new ZD estimate that beats Ingham to the LEFT of sigma = 0.70
+    (iii) Simultaneously improving both sides
+
+  UNCHANGED FACES:
+    - The energy face (rho* constraints) is untouched by GM.
+    - The coupling face (s constraints) has new GM contributions
+      but these don't affect theta_PNTALL directly.
+    - The exponent pair hull is enriched by GM but only contributes
+      through the Bourgain EP-to-ZD pathway, binding at high sigma.
+
+========================================================================
+PIECEWISE A(sigma) FROM THE FULL EXPDB PIPELINE
+========================================================================
+
+  sigma     A(sigma)    Source
+  -------   --------    ------------------------------------------
+  0.52      2.027       Ingham (1940)
+  0.55      2.069       Ingham (1940)
+  0.58      2.113       Ingham (1940)
+  0.60      2.143       Ingham (1940)
+  0.62      2.174       Ingham (1940)
+  0.64      2.206       Ingham (1940)
+  0.66      2.239       Ingham (1940)
+  0.68      2.273       Ingham (1940)
+  0.695     2.299       Ingham (1940)
+  0.700     2.308  ***  Guth-Maynard (2024)  [PEAK: ||A||_infty]
+  0.705     2.299       Guth-Maynard (2024)
+  0.72      2.273       Guth-Maynard (2024)
+  0.74      2.239       Guth-Maynard (2024)
+  0.76      2.206       Ivic (2003)
+  0.78      2.009       Tao-Trudgian-Yang (2024)
+  0.80      1.875       Ivic (1980)
+  0.85      1.765       Ivic (1980)
+  0.90      1.500       Tao-Trudgian-Yang (2024)
+  0.95      1.092       Derived (Bourgain EP)
+  0.98      0.714       Pintz (2023)
+  0.99      0.487       Pintz (2023)
+
+========================================================================
+END OF REPORT
+========================================================================
