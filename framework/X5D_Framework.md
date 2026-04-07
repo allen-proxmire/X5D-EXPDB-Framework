@@ -1,4 +1,4 @@
-# The Factor Skyline Framework: An Architectural Language for Dynamical Systems
+# The X5D Framework: An Architectural Language for Dynamical Systems
 
 **Allen Proxmire**
 
@@ -14,13 +14,13 @@
 - 1.3 The Structural Gap
 - 1.4 What We Need
 
-**Chapter 2 — What FS Is**
+**Chapter 2 — What X5D Is**
 - 2.1 Systems as Architectures
 - 2.2 Channels
 - 2.3 Envelopes
 - 2.4 Constraint Surfaces
 - 2.5 Poles
-- 2.6 The FS Criteria
+- 2.6 The X5D Criteria
 - 2.7 Putting It Together
 
 **Chapter 3 — Channels: The Building Blocks**
@@ -52,7 +52,7 @@
 - 6.4 Dissipation Geometry
 - 6.5 Why Geometry Is the Deepest Layer
 
-**Chapter 7 — The FS Criteria**
+**Chapter 7 — The X5D Criteria**
 - 7.1 Minimality
 - 7.2 Locality
 - 7.3 Determinism
@@ -68,7 +68,7 @@
 - 8.4 Apex Architectures
 - 8.5 The Summary Table
 
-**Chapter 9 — FS Beyond PDEs**
+**Chapter 9 — X5D Beyond PDEs**
 - 9.1 A General Language
 - 9.2 Physical Ontologies
 - 9.3 Dynamical Systems
@@ -76,7 +76,7 @@
 - 9.5 Computation and Learning
 
 **Chapter 10 — Implications and Future Directions**
-- 10.1 What FS Enables
+- 10.1 What X5D Enables
 - 10.2 Reframing PDE Theory
 - 10.3 Reframing Physical Modeling
 - 10.4 Open Directions
@@ -122,19 +122,19 @@ Bridging this gap requires a framework that can:
 
 We need an *architectural language* — a set of concepts and methods that can express the structural properties of any dynamical system in a common vocabulary, enabling comparison, classification, and insight across domains.
 
-The Factor Skyline Framework is this language. It was developed not as an abstract theoretical exercise but as a practical tool for understanding the structural relationships among the major nonlinear PDEs of mathematical physics — and, more broadly, for understanding what makes some mathematical structures simple, some complex, some well-behaved, some pathological, some integrable, some turbulent, some tractable, and some open.
+The X5D framework is this language. It was developed not as an abstract theoretical exercise but as a practical tool for understanding the structural relationships among the major nonlinear PDEs of mathematical physics — and, more broadly, for understanding what makes some mathematical structures simple, some complex, some well-behaved, some pathological, some integrable, some turbulent, some tractable, and some open.
 
-The name "Factor Skyline" comes from the framework's origin in the study of the multiplicative structure of the integers — the "skyline" of prime factorization — but the framework itself is general: it applies to any system that can be decomposed into interacting channels with definite structural properties.
+The "Factor Skyline", a separate work, is the framework's origin, and is the study of the multiplicative structure of the integers — the "skyline" of prime factorization — but the framework itself is general: it applies to any system that can be decomposed into interacting channels with definite structural properties.
 
 ---
 
-# Chapter 2 — What FS Is
+# Chapter 2 — What X5D Is
 
 ## 2.1 Systems as Architectures
 
-The central idea of FS is simple: every dynamical system is an *architecture* — a structured composition of channels, conservation laws, symmetries, and constraints. The architecture determines what the system can do (its dynamical repertoire), what it cannot do (its forbidden configurations), and how it behaves at its structural limits (its extremal dynamics).
+The central idea of X5D is simple: every dynamical system is an *architecture* — a structured composition of channels, conservation laws, symmetries, and constraints. The architecture determines what the system can do (its dynamical repertoire), what it cannot do (its forbidden configurations), and how it behaves at its structural limits (its extremal dynamics).
 
-An architecture is not the same as a solution. A solution is a specific trajectory — a particular evolution from particular initial data. An architecture is the *structural framework* that generates all possible trajectories — the rules of the game, not any particular play. The FS framework analyzes architectures, not solutions.
+An architecture is not the same as a solution. A solution is a specific trajectory — a particular evolution from particular initial data. An architecture is the *structural framework* that generates all possible trajectories — the rules of the game, not any particular play. The X5D framework analyzes architectures, not solutions.
 
 An architecture is also not the same as an equation. An equation is a symbolic representation — a formula written in a specific coordinate system with specific notation. An architecture is the *structural content* of the equation — the channels, invariants, and constraints that persist regardless of how the equation is written. Two different-looking equations can have the same architecture (as when the Allen–Cahn equation is written in various normalizations), and two similar-looking equations can have different architectures (as when the Burgers equation and the KdV equation differ by a single dispersive term but have qualitatively different dynamics).
 
@@ -188,9 +188,9 @@ The PDE Atlas reveals seven poles:
 
 The poles are not rigid categories — they are *tendencies*. A system can have features of multiple poles (KdV has both dispersive and hyperbolic features). But the dominant pole determines the qualitative character.
 
-## 2.6 The FS Criteria
+## 2.6 The X5D Criteria
 
-FS evaluates each architecture against six criteria:
+X5D evaluates each architecture against six criteria:
 
 1. **Minimality:** Are the axioms irreducible? Is the architecture the simplest that generates its dynamics?
 2. **Locality:** Are all channels local? Is the architecture free of nonlocal operators?
@@ -199,18 +199,18 @@ FS evaluates each architecture against six criteria:
 5. **Envelope Tightness:** Are the envelope bounds sharp? Is the envelope fully closed?
 6. **Structural Optimality:** Is the architecture free of anomalies? Is it the most economical system for its dynamics?
 
-Each criterion receives a verdict: PASS, CONDITIONAL, or FAIL. The number of PASSes is the FS score, ranging from 0 to 6.
+Each criterion receives a verdict: PASS, CONDITIONAL, or FAIL. The number of PASSes is the X5D score, ranging from 0 to 6.
 
 ## 2.7 Putting It Together
 
-The FS analysis of a system follows a workflow:
+The X5D analysis of a system follows a workflow:
 
 1. **Identify the axioms** — the structural commitments that define the architecture.
 2. **Decompose into channels** — the independent mechanisms driving the dynamics.
 3. **Derive the envelope** (Mode 1) — the forbidden and necessary configurations, the envelope inequalities.
 4. **Identify the extremal dynamics** (Mode 2) — the behaviors at the boundary of the envelope.
 5. **Construct the constraint surface** (Mode 3) — the geometric object encoding channel relationships.
-6. **Evaluate the FS criteria** — the six-criterion assessment of structural quality.
+6. **Evaluate the X5D criteria** — the six-criterion assessment of structural quality.
 7. **Assign to a pole** — the structural classification within the atlas.
 
 The output is an *atlas entry* — a complete structural profile that can be compared with any other entry.
@@ -273,7 +273,7 @@ Channels do not act independently — they interact through several mechanisms:
 
 ## 3.5 Why Channels Are Atomic
 
-The channels are the *irreducible building blocks* of the FS framework because:
+The channels are the *irreducible building blocks* of the X5D framework because:
 
 1. **Finiteness.** The number of qualitatively distinct channel types is *finite* — approximately nine. This means the space of possible architectures is finite-dimensional (at least at the qualitative level), enabling a finite taxonomy.
 
@@ -418,7 +418,7 @@ The extremal dynamics are where the architecture's *true character* is revealed 
 
 ## 6.1 What a Constraint Surface Is
 
-The constraint surface is the *deepest structural object* in the FS analysis. It is the geometric object in channel space that encodes *all* structural relationships among the channels — not just the individual channel properties (which Mode 1 derives) and the extremal behaviors (which Mode 2 identifies) but the *geometry of how the channels interact*.
+The constraint surface is the *deepest structural object* in the X5D analysis. It is the geometric object in channel space that encodes *all* structural relationships among the channels — not just the individual channel properties (which Mode 1 derives) and the extremal behaviors (which Mode 2 identifies) but the *geometry of how the channels interact*.
 
 Think of it this way. Each channel has a "dial" — a level of activity at each point in space and time. The diffusion dial measures how much smoothing is happening. The transport dial measures how much steepening. The curvature dial measures how much geometric evolution. The set of all possible dial settings, subject to the system's structural constraints, forms a geometric object — the constraint surface.
 
@@ -461,13 +461,13 @@ The dissipation geometry determines the *direction* of the dynamics on the const
 
 ## 6.5 Why Geometry Is the Deepest Layer
 
-The constraint surface is the deepest layer of the FS analysis because it captures *all* structural relationships simultaneously — not just the individual channel properties (Mode 1) or the extremal behaviors (Mode 2) but the *full geometry of channel interactions*. The closure, dimensionality, and singularity structure of the constraint surface determine the system's qualitative character more completely than any individual inequality or any individual extremal behavior.
+The constraint surface is the deepest layer of the X5D analysis because it captures *all* structural relationships simultaneously — not just the individual channel properties (Mode 1) or the extremal behaviors (Mode 2) but the *full geometry of channel interactions*. The closure, dimensionality, and singularity structure of the constraint surface determine the system's qualitative character more completely than any individual inequality or any individual extremal behavior.
 
 The constraint surface is where the *poles* become visible. Systems at the same pole have qualitatively similar constraint-surface geometries: contracting surfaces at the diffusive pole, isoenergetic surfaces at the dispersive pole, entropy-resolved surfaces at the hyperbolic pole. The constraint-surface geometry is the *defining structural feature* of each pole — the geometric property that makes diffusive systems smooth, dispersive systems oscillate, and hyperbolic systems steepen.
 
 ---
 
-# Chapter 7 — The FS Criteria
+# Chapter 7 — The X5D Criteria
 
 ## 7.1 Minimality
 
@@ -525,7 +525,7 @@ The architectures with the strongest structural optimality are those with *zero 
 
 ## 7.7 Why These Six
 
-The six FS criteria are not arbitrary — they capture the six fundamental dimensions of *architectural quality*:
+The six X5D criteria are not arbitrary — they capture the six fundamental dimensions of *architectural quality*:
 
 - Minimality measures *economy* (is the architecture lean?).
 - Locality measures *simplicity* (is the architecture free of nonlocal entanglement?).
@@ -544,7 +544,7 @@ Together, these six criteria measure the *structural soundness* of an architectu
 
 An atlas is a collection of maps — each map showing a different region, but all drawn in the same projection, with the same symbols, the same scale, the same legend. You can compare any two maps because they speak the same visual language.
 
-The PDE Atlas is a collection of structural profiles — each profile describing a different PDE, but all analyzed through the same FS methodology, with the same concepts (channels, envelopes, constraint surfaces, poles), the same criteria (minimality, locality, determinism, generative sufficiency, envelope tightness, structural optimality), and the same scoring (PASS/CONDITIONAL/FAIL). You can compare any two PDEs because they speak the same structural language.
+The PDE Atlas is a collection of structural profiles — each profile describing a different PDE, but all analyzed through the same X5D methodology, with the same concepts (channels, envelopes, constraint surfaces, poles), the same criteria (minimality, locality, determinism, generative sufficiency, envelope tightness, structural optimality), and the same scoring (PASS/CONDITIONAL/FAIL). You can compare any two PDEs because they speak the same structural language.
 
 The atlas currently contains sixteen entries — the major nonlinear PDEs of mathematical physics. It is not exhaustive (many important PDEs are not yet evaluated), but it is *representative*: it covers all seven structural poles and all seven closure modes.
 
@@ -580,17 +580,17 @@ The atlas identifies two *apex architectures* — PDEs that achieve the deepest 
 
 ## 8.5 The Summary Table
 
-[Figure 1: FS_Atlas_Summary_Table.png — Summary of PDE architectures, poles, and FS scores.]
+[Figure 1: X5D_Atlas_Summary_Table.png — Summary of PDE architectures, poles, and X5D scores.]
 
-The summary table presents each architecture's pole, locality, singularity type, nonlocality, integrability, gradient-flow structure, and FS score. The table is the *compressed visual representation* of the atlas — a single image containing the entire structural taxonomy.
+The summary table presents each architecture's pole, locality, singularity type, nonlocality, integrability, gradient-flow structure, and X5D score. The table is the *compressed visual representation* of the atlas — a single image containing the entire structural taxonomy.
 
 ---
 
-# Chapter 9 — FS Beyond PDEs
+# Chapter 9 — X5D Beyond PDEs
 
 ## 9.1 A General Language
 
-The FS framework is not tied to PDEs. Its core concepts — channels, envelopes, constraint surfaces, poles — are *domain-independent*. They apply to any system that can be decomposed into interacting mechanisms with definite structural properties.
+The X5D framework is not tied to PDEs. Its core concepts — channels, envelopes, constraint surfaces, poles — are *domain-independent*. They apply to any system that can be decomposed into interacting mechanisms with definite structural properties.
 
 The key insight is that the *same structural phenomena* appear across different mathematical domains: decomposition into irreducible components (prime factorization, soliton resolution, geometric decomposition), competition between stabilizing and destabilizing mechanisms (diffusion vs. advection, entropy vs. aggregation, parabolic smoothing vs. curvature reaction), and the existence of canonical forms (equilibria, self-similar profiles, solitons, Einstein metrics).
 
@@ -598,7 +598,7 @@ These structural phenomena are not tied to PDEs — they are *architectural univ
 
 ## 9.2 Physical Ontologies
 
-The FS framework originated in the study of the *Factor Skyline* — the two-dimensional representation of the integers in which each integer $n$ becomes a column of width $\text{lpf}(n)$ (least prime factor) and height $n/\text{lpf}(n)$. The FS primitives (width, height, activation, coverage, escape) are the "channels" of the arithmetic structure, and the prime number theorem, Mertens' theorem, and the Chebyshev conservation law are the "envelope inequalities."
+The X5D framework originated in the study of the *Factor Skyline* — the two-dimensional representation of the integers in which each integer $n$ becomes a column of width $\text{lpf}(n)$ (least prime factor) and height $n/\text{lpf}(n)$. The FS primitives (width, height, activation, coverage, escape) are the "channels" of the arithmetic structure, and the prime number theorem, Mertens' theorem, and the Chebyshev conservation law are the "envelope inequalities."
 
 The arithmetic skyline is a *static architecture* — the integers do not evolve in time. But it shares deep structural parallels with the dynamical PDE architectures: the sieve decomposition of integers into primes parallels the KdV soliton resolution; the prime distribution (PNT) parallels the Gibbs–Boltzmann equilibrium of FP; the coverage conservation (Chebyshev) parallels the mass conservation of PME.
 
@@ -606,39 +606,39 @@ These parallels are not coincidental — they reflect the *universality of archi
 
 ## 9.3 Dynamical Systems
 
-The FS framework extends naturally to finite-dimensional dynamical systems $\dot{x} = f(x)$. The channels are the components of $f$: linear terms (eigenvalue structure), nonlinear terms (bifurcation structure), coupling terms (network topology). The envelope is the set of invariant manifolds, Lyapunov functions, and conserved quantities. The constraint surface is the phase portrait.
+The X5D framework extends naturally to finite-dimensional dynamical systems $\dot{x} = f(x)$. The channels are the components of $f$: linear terms (eigenvalue structure), nonlinear terms (bifurcation structure), coupling terms (network topology). The envelope is the set of invariant manifolds, Lyapunov functions, and conserved quantities. The constraint surface is the phase portrait.
 
 The poles of finite-dimensional dynamical systems include: gradient (Lyapunov descent to fixed points), Hamiltonian (energy-preserving, quasi-periodic), dissipative-chaotic (strange attractors, sensitive dependence), and integrable (Liouville theorem, action-angle coordinates, invariant tori).
 
 ## 9.4 Geometry
 
-The FS framework applies to *geometric structures* — Riemannian manifolds, symplectic manifolds, algebraic varieties — viewed as static architectures whose "channels" are the curvature components and whose "envelope" is the set of geometric constraints (Einstein condition, Kähler condition, Calabi–Yau condition).
+The X5D framework applies to *geometric structures* — Riemannian manifolds, symplectic manifolds, algebraic varieties — viewed as static architectures whose "channels" are the curvature components and whose "envelope" is the set of geometric constraints (Einstein condition, Kähler condition, Calabi–Yau condition).
 
 The geometric flows (Ricci flow, Kähler–Ricci flow, mean curvature flow, Willmore flow) are the *dynamical extensions* of these static architectures — they evolve the geometry toward its canonical form, using the curvature as the driving mechanism.
 
 ## 9.5 Computation and Learning
 
-Neural network architectures can be viewed through the FS lens: the layer types (convolutional, recurrent, attention, normalization) are channels; the representable functions are the envelope; the loss landscape is the constraint surface. The FS criteria apply directly: Is the architecture minimal (no unnecessary layers)? Is it local (convolutional) or nonlocal (attention)? Is training deterministic (does it converge to a unique solution)? Does it generate all the features of the data distribution?
+Neural network architectures can be viewed through the X5D lens: the layer types (convolutional, recurrent, attention, normalization) are channels; the representable functions are the envelope; the loss landscape is the constraint surface. The X5D criteria apply directly: Is the architecture minimal (no unnecessary layers)? Is it local (convolutional) or nonlocal (attention)? Is training deterministic (does it converge to a unique solution)? Does it generate all the features of the data distribution?
 
-This perspective is speculative but suggestive. The explosive growth of neural architecture design — with hundreds of competing architectures, each with different layer combinations — calls out for the kind of structural classification that FS provides. If the FS framework can identify the "poles" of neural architectures (the qualitatively distinct channel combinations that produce distinct computational behaviors), it could provide a principled basis for architecture design.
+This perspective is speculative but suggestive. The explosive growth of neural architecture design — with hundreds of competing architectures, each with different layer combinations — calls out for the kind of structural classification that X5D provides. If the X5D framework can identify the "poles" of neural architectures (the qualitatively distinct channel combinations that produce distinct computational behaviors), it could provide a principled basis for architecture design.
 
 ---
 
 # Chapter 10 — Implications and Future Directions
 
-## 10.1 What FS Enables
+## 10.1 What X5D Enables
 
-The FS framework enables several things that were previously impossible or extremely difficult:
+The X5D framework enables several things that were previously impossible or extremely difficult:
 
 **Cross-domain comparison.** For the first time, we can *rigorously compare* the Navier–Stokes equations with Ricci flow, the Keller–Segel system with the NLS, or the KdV equation with the porous medium equation — not by analogy or metaphor but through a *common structural language* that identifies the specific channels, envelopes, and constraint surfaces of each architecture.
 
-**Structural diagnosis.** Given a new PDE, FS provides a systematic method for identifying its structural properties: decompose into channels, derive the envelope, construct the constraint surface, evaluate the criteria. The output is a complete structural profile that immediately reveals the system's pole, closure mode, and structural quality — before any detailed analysis is performed.
+**Structural diagnosis.** Given a new PDE, X5D provides a systematic method for identifying its structural properties: decompose into channels, derive the envelope, construct the constraint surface, evaluate the criteria. The output is a complete structural profile that immediately reveals the system's pole, closure mode, and structural quality — before any detailed analysis is performed.
 
 **Open-problem localization.** The atlas localizes the difficulty of the NS 3D regularity problem to a specific structural feature: the interaction of the self-advection channel with the incompressibility constraint and the nonlocal pressure channel. Burgers (which has self-advection without incompressibility or pressure) is completely understood. KdV (which adds dispersion to Burgers' advection) is exactly solvable. The structural addition of incompressibility + pressure is *precisely* what makes NS intractable — and this identification suggests that any resolution of the NS problem must come to terms with this specific structural interaction.
 
 ## 10.2 Reframing PDE Theory
 
-The FS framework suggests a shift in how we think about PDE theory: from *equation-centered* (each PDE studied individually, with its own community and its own tools) to *architecture-centered* (PDEs studied as instances of structural types, with shared tools and transferable insights).
+The X5D framework suggests a shift in how we think about PDE theory: from *equation-centered* (each PDE studied individually, with its own community and its own tools) to *architecture-centered* (PDEs studied as instances of structural types, with shared tools and transferable insights).
 
 In the architecture-centered view:
 - A new PDE is first classified by its channels and pole, then analyzed using the tools appropriate to that pole.
@@ -647,26 +647,26 @@ In the architecture-centered view:
 
 ## 10.3 Reframing Physical Modeling
 
-The FS framework also suggests a shift in how we think about physical modeling: from *equation-first* (start with the PDE and study its properties) to *architecture-first* (start with the structural requirements and select the simplest architecture that satisfies them).
+The X5D framework also suggests a shift in how we think about physical modeling: from *equation-first* (start with the PDE and study its properties) to *architecture-first* (start with the structural requirements and select the simplest architecture that satisfies them).
 
 In the architecture-first approach:
 - The modeler specifies the required channels (diffusion + advection? diffusion + reaction? diffusion + aggregation?) and the required structural properties (conservation? locality? gradient-flow structure?).
-- The FS framework identifies the *structural pole* that matches these requirements.
+- The X5D framework identifies the *structural pole* that matches these requirements.
 - The simplest architecture at that pole is selected as the model.
 
 This approach would produce *structurally minimal* models — models with the fewest channels and the simplest architecture that generate the required phenomenology.
 
 ## 10.4 Open Directions
 
-The FS framework motivates several research programs:
+The X5D framework motivates several research programs:
 
 **Extending the atlas.** The current atlas covers sixteen PDEs. Important systems not yet evaluated include: the Boltzmann equation, the Vlasov–Poisson system, the Euler equations (inviscid), the Ginzburg–Landau equation (complex, with diffusion + dispersion), the Kuramoto–Sivashinsky equation (fourth-order + instability), the Camassa–Holm equation (integrable, wave-breaking), the surface quasi-geostrophic equation (2D analogue of 3D Euler), and the Yang–Mills equations (gauge theory).
 
-**Stochastic extensions.** Adding noise channels (additive, multiplicative, space-time) to the FS framework would enable the analysis of stochastic PDEs — connecting to the theory of regularity structures and paracontrolled distributions.
+**Stochastic extensions.** Adding noise channels (additive, multiplicative, space-time) to the X5D framework would enable the analysis of stochastic PDEs — connecting to the theory of regularity structures and paracontrolled distributions.
 
-**Computational FS.** Developing software tools for automating the FS analysis — channel identification, envelope computation, constraint-surface visualization — would make the framework accessible to a broader community.
+**Computational X5D.** Developing software tools for automating the X5D analysis — channel identification, envelope computation, constraint-surface visualization — would make the framework accessible to a broader community.
 
-**FS-guided numerics.** Developing numerical methods that *respect the channel structure* — preserving conservation laws, maintaining the correct stability roles, and correctly discretizing nonlocal channels — could produce more robust and efficient simulations.
+**X5D-guided numerics.** Developing numerical methods that *respect the channel structure* — preserving conservation laws, maintaining the correct stability roles, and correctly discretizing nonlocal channels — could produce more robust and efficient simulations.
 
 ---
 
@@ -674,7 +674,7 @@ The FS framework motivates several research programs:
 
 ## 11.1 The Core Insight
 
-The core insight of the Factor Skyline Framework is simple but powerful: *every dynamical system is a composition of channels, and the qualitative behavior of the system is determined by the interactions among those channels within the constraint surface defined by the system's axioms.*
+The core insight of the X5D framework is simple but powerful: *every dynamical system is a composition of channels, and the qualitative behavior of the system is determined by the interactions among those channels within the constraint surface defined by the system's axioms.*
 
 This insight transforms the study of dynamical systems from a collection of individual analyses (each system studied with its own tools, in its own community, with its own vocabulary) into a *unified structural enterprise* (all systems analyzed with the same concepts, in the same framework, with the same vocabulary).
 
@@ -684,15 +684,15 @@ The transformation is not merely organizational. It reveals structural relations
 
 Architectural thinking — analyzing systems through their structural properties rather than their specific solutions — has a distinguished history in mathematics. Galois theory classifies polynomial equations by their symmetry groups. Category theory classifies mathematical structures by their morphisms. Thurston's geometrization classifies 3-manifolds by their model geometries.
 
-The FS framework extends this tradition to dynamical systems. It classifies PDEs by their channel compositions, envelopes, constraint surfaces, and poles — producing a structural taxonomy that reveals the *deep reasons* behind the phenomena that PDE theory studies.
+The X5D framework extends this tradition to dynamical systems. It classifies PDEs by their channel compositions, envelopes, constraint surfaces, and poles — producing a structural taxonomy that reveals the *deep reasons* behind the phenomena that PDE theory studies.
 
 The value of this classification is not that it replaces detailed analysis — it does not. The $L^1$ contraction of Burgers still needs to be proved; the Perelman monotonicity of Ricci flow still needs to be discovered; the soliton resolution of KdV still needs the inverse scattering transform. What the classification provides is *context*: it shows where each result fits in the structural landscape, what it has in common with results in other domains, and what it tells us about the architecture's character.
 
 ## 11.3 The Future
 
-The Factor Skyline Framework is a beginning, not an end. The PDE Atlas covers sixteen systems; the mathematical universe contains thousands. The FS methodology has been demonstrated for PDEs; it could be extended to ODEs, stochastic systems, geometric structures, computational architectures, and physical ontologies. The seven poles and seven closure modes identified in the current atlas may be the beginning of a larger taxonomy that encompasses all of mathematical dynamics.
+The X5D framework is a beginning, not an end. The PDE Atlas covers sixteen systems; the mathematical universe contains thousands. The X5D methodology has been demonstrated for PDEs; it could be extended to ODEs, stochastic systems, geometric structures, computational architectures, and physical ontologies. The seven poles and seven closure modes identified in the current atlas may be the beginning of a larger taxonomy that encompasses all of mathematical dynamics.
 
-The ultimate vision is ambitious but concrete: a *structural atlas of mathematics* — a comprehensive map of the architectural landscape, showing the poles, the connections, the hierarchies, and the apex structures that organize the mathematical universe. The Factor Skyline Framework provides the language for this atlas. The PDE Atlas provides the first detailed map. The territory is vast, and the exploration has only begun.
+The ultimate vision is ambitious but concrete: a *structural atlas of mathematics* — a comprehensive map of the architectural landscape, showing the poles, the connections, the hierarchies, and the apex structures that organize the mathematical universe. The X5D framework provides the language for this atlas. The PDE Atlas provides the first detailed map. The territory is vast, and the exploration has only begun.
 
 ---
 

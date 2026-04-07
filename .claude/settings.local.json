@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mv \"EXPBD-X5D/EXPDB-Skyline_A-Polyhedral-Reinterpretation.md\" \"examples/expdb/X5D_EXPDB_Reinterpretation.md\")",
+      "Bash(mv \"EXPBD-X5D/invariant.md\" \"examples/expdb/invariant.md\")",
+      "Bash(mv \"EXPBD-X5D/README.md\" \"examples/expdb/README.md\")",
+      "Bash(rmdir \"EXPBD-X5D\")",
+      "Bash(mv \"EXPDB-Analysis/README.md\" \"examples/expdb/analysis/README.md\")",
+      "Bash(mv \"EXPDB-Analysis/GuthMaynard_BindingConstraints.md\" \"examples/expdb/analysis/GuthMaynard_BindingConstraints.md\")",
+      "Bash(mv \"EXPDB-Analysis/GuthMaynard_EXPDB_Analysis.md\" \"examples/expdb/analysis/GuthMaynard_EXPDB_Analysis.md\")",
+      "Bash(mv \"EXPDB-Analysis/GuthMaynard_Pipeline_Report.txt\" \"examples/expdb/analysis/GuthMaynard_Pipeline_Report.txt\")",
+      "Bash(mv \"EXPDB-Analysis/A_sigma_envelope.png\" \"examples/expdb/analysis/figures/A_sigma_envelope.png\")",
+      "Bash(mv \"compute/EXPDB_NEXT_STEPS.md\" \"examples/expdb/NEXT_STEPS.md\")",
+      "Bash(mv \"compute/expdb_full_pipeline.py\" \"compute/pipeline.py\")",
+      "Bash(mv \"compute/expdb_pipeline.py\" \"compute/archive/pipeline_v1.py\")",
+      "Bash(mv \"compute/expdb_pipeline_v2.py\" \"compute/archive/pipeline_v2.py\")",
+      "Bash(mv \"compute/plot_A_envelope.py\" \"compute/plots/plot_A_envelope.py\")",
+      "Bash(for f:*)",
+      "Bash(do echo:*)",
+      "Read(//c/Users/allen/GitHub/EXPDB 5D Polyhedral/**)",
+      "Bash(done)",
+      "Bash(ls *.py)",
+      "Bash(python -c \":*)",
+      "Read(//c/Users/allen/GitHub/**)",
+      "Bash(mv \"EXPDB 5D Polyhedral\" \"X5D EXPDB Framework\")",
+      "Bash(echo \"exit=$?\")"
+    ]
+  }
+}

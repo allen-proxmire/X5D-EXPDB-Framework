@@ -1,4 +1,4 @@
-# The EXPDB Skyline Invariant
+# The X5D-EXPDB Invariant
 
 ## Definition (Master Polytope)
 
@@ -97,9 +97,9 @@ and linear images of the same structure.
 
 ---
 
-## Definition (EXPDB Skyline)
+## Definition (X5D-EXPDB Signature)
 
-The **EXPDB Skyline** associated to a hypothesis set \( \mathcal{H}_0 \) is:
+The **X5D-EXPDB signature** associated to a hypothesis set \( \mathcal{H}_0 \) is:
 
 
 
@@ -126,9 +126,9 @@ where each component is the boundary, envelope, or hull derived from
 
 ---
 
-## The Skyline Invariant
+## The X5D Invariant
 
-**Theorem (Skyline Invariant).**  
+**Theorem (X5D Invariant).**
 If \( \mathcal{H}_1 \subseteq \mathcal{H}_2 \), then:
 
 
@@ -146,7 +146,7 @@ Equivalently:
 - half‑spaces shrink \( \mathcal{P} \),
 - shrinking \( \mathcal{P} \) tightens all projections and envelopes.
 
-Thus the Skyline is a **monotone invariant** of the hypothesis set.
+Thus the X5D-EXPDB signature is a **monotone invariant** of the hypothesis set.
 
 ---
 
@@ -162,13 +162,13 @@ Then:
 - the descending chain \( \Omega, \Phi(\Omega), \Phi^2(\Omega), \ldots \)
   stabilizes in finitely many steps.
 
-The limit state is exactly the Skyline \( \Sigma(\mathcal{H}_0) \).
+The limit state is exactly the X5D-EXPDB signature \( \Sigma(\mathcal{H}_0) \).
 
 ---
 
 ## Summary
 
-The EXPDB Skyline is the complete geometric signature of the EXPDB pipeline:
+X5D-EXPDB is the complete geometric signature of the EXPDB pipeline:
 a single 5‑dimensional polytope \( \mathcal{P} \) whose shadows and envelopes
 produce every analytic bound in the system, and whose refinement under added
 axioms is monotone and convergent.

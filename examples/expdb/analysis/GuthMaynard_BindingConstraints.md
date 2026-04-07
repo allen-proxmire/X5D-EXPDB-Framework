@@ -80,7 +80,7 @@ $$
 
 The supremum $\|A\|_\infty = 30/13$ is attained at this crossover. The function $A(\sigma)$ has a non-smooth peak — a cusp formed by two rational curves meeting tangentially from opposite sides. Before Guth–Maynard, the analogous cusp was at $\sigma \approx 5/7 \approx 0.714$, where Ingham met Huxley at $\|A\|_\infty = 12/5$. Guth–Maynard shifted the cusp leftward (from $5/7$ to $7/10$) and downward (from $12/5$ to $30/13$).
 
-![Zero-density envelope A(sigma) after Guth-Maynard, showing the piecewise binding constraints colored by source. The cusp at sigma = 7/10 where Ingham and GM meet is marked.](A_sigma_envelope.png)
+![Zero-density envelope A(sigma) after Guth-Maynard, showing the piecewise binding constraints colored by source. The cusp at sigma = 7/10 where Ingham and GM meet is marked.](figures/A_sigma_envelope.png)
 *Figure 1. The zero-density envelope $A(\sigma)$ computed from 482 EXPDB hypotheses. Each colored segment indicates the binding constraint on that interval. Dashed curves show the Ingham and GM bounds extended beyond their binding ranges. The cusp at $\sigma^* = 7/10$ with $A = 30/13$ is marked.*
 ## 4. Binding and Slack Constraints
 
@@ -253,7 +253,7 @@ $$
 
 The attack surface is small. A new bound that improves $A$ by $0.01$ at the single point $\sigma = 0.70$ need only extend over an interval of width $\approx 0.006$.
 
-![Sensitivity heat map for theta_PNTALL showing the cone of nonzero sensitivity concentrated at sigma = 0.70.](sensitivity_heatmap.png)
+![Sensitivity heat map for theta_PNTALL showing the cone of nonzero sensitivity concentrated at sigma = 0.70.](figures/sensitivity_heatmap.png)
 *Figure 2. Sensitivity $d\theta_{\mathrm{PNTALL}}/dA(\sigma)$ as a function of $\sigma$ (horizontal) and improvement magnitude $\varepsilon$ (vertical). The cone of nonzero sensitivity flares from the cusp at $\sigma = 0.70$. White boundary lines trace the $V$-shaped contour with slopes $\pm 300/169$. For small $\varepsilon$, only $\sigma \in [0.695, 0.705]$ contributes.*
 
 ### Sensitivity map for $\theta_{\mathrm{GAPSQUARE}}$
@@ -273,7 +273,7 @@ For the mean-square gap exponent, the $\alpha/\beta$ formulas create a completel
 
 The crossover from $A$-dominated to $B$-dominated sensitivity occurs near $\sigma \approx 0.75$. Below this, tightening $A$ helps most; above it, tightening $B = A^*$ helps most. The two heat maps for $\theta_{\mathrm{PNTALL}}$ and $\theta_{\mathrm{GAPSQUARE}}$ are essentially disjoint: the prime gap exponent is controlled by $\sigma \approx 0.70$, while the mean-square exponent is controlled by $\sigma > 0.85$ — and there, the energy bound $B$ is the dominant lever.
 
-![Sensitivity of alpha to A and B as functions of sigma, showing the crossover near sigma = 0.75 and the sign change of d(alpha)/dA near sigma = 0.80.](alpha_sensitivity.png)
+![Sensitivity of alpha to A and B as functions of sigma, showing the crossover near sigma = 0.75 and the sign change of d(alpha)/dA near sigma = 0.80.](figures/alpha_sensitivity.png)
 *Figure 3. Partial derivatives $\partial\alpha/\partial A$ (blue) and $\partial\alpha/\partial B$ (red) as functions of $\sigma$. The crossover at $\sigma \approx 0.751$ separates $A$-dominant (left) from $B$-dominant (right) regimes. The zero crossing of $\partial\alpha/\partial A$ at $\sigma \approx 0.804$ marks where improving $A$ becomes counterproductive for $\theta_{\mathrm{GAPSQUARE}}$.*
 
 Note that $\partial\alpha/\partial A$ changes sign near $\sigma \approx 0.80$. For $\sigma > 0.80$, *decreasing* $A$ actually *increases* $\alpha$ (and hence worsens $\theta_{\mathrm{GAPSQUARE}}$). This is because the $\alpha$ formula has $A$ in the denominator $B - A$: decreasing $A$ widens the gap $B - A$, which decreases $\alpha$ through the numerator but increases it through the denominator. The net sign depends on the local ratio $B/A$.
@@ -294,7 +294,7 @@ If someone lowers the cusp at $\sigma = 0.70$, the new $\|A\|_\infty$ is determi
 
 After the first improvement past GM, the second improvement would need to target a *different* $\sigma$ range ($\sigma \approx 0.76$) and a *different* constraint family (Ivic, not GM). The targets march rightward along $\sigma$ as the peak is lowered, each requiring a distinct analytical technique. Reaching the Density Hypothesis $\|A\|_\infty = 2$ requires beating *every* bound in the table — a sequence of progressively harder problems spanning the entire range $\sigma \in (1/2, 1)$.
 
-![Succession of bottlenecks as the cusp is progressively shaved, showing the peak migrating rightward through Ivic, TTY, and other constraints.](succession_bottlenecks.png)
+![Succession of bottlenecks as the cusp is progressively shaved, showing the peak migrating rightward through Ivic, TTY, and other constraints.](figures/succession_bottlenecks.png)
 *Figure 4. Successive hypothetical improvements to the $A(\sigma)$ envelope. Black: current envelope. Red ($\varepsilon = 0.10$): first shave exposes Ivic (2003) at $\sigma \approx 0.76$. Orange ($\varepsilon = 0.22$): second shave exposes Ivic (1979)/TTY. Purple ($\varepsilon = 0.43$): third shave reaches Ivic (1980) at $\sigma \approx 0.80$. The bottleneck migrates rightward with each improvement.*
 
 ---

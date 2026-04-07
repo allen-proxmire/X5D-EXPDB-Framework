@@ -6,7 +6,7 @@ This folder contains a structural analysis of the [Analytic Number Theory Expone
 
 - **[GuthMaynard_BindingConstraints.md](GuthMaynard_BindingConstraints.md)** - The main paper. Identifies the cusp at sigma = 7/10 where Ingham (1940) and Guth-Maynard (2024) meet at A = 30/13, performs sensitivity analysis (d(theta)/d(||A||) = 169/900), maps the succession of bottlenecks, and shows that the EXPDB pipeline has fully exploited the GM result for theta_PNTALL = 17/30.
 
-- **[GuthMaynard_EXPDB_Analysis.md](GuthMaynard_EXPDB_Analysis.md)** - Background analysis describing how GM fits into the EXPDB polyhedral framework.
+- **[GuthMaynard_EXPDB_Analysis.md](GuthMaynard_EXPDB_Analysis.md)** - Background analysis describing how GM fits into the X5D-EXPDB polyhedral framework.
 
 - **[GuthMaynard_Pipeline_Report.txt](GuthMaynard_Pipeline_Report.txt)** - Raw pipeline output.
 
@@ -14,25 +14,25 @@ This folder contains a structural analysis of the [Analytic Number Theory Expone
 
 | Figure | Description |
 |--------|-------------|
-| [A_sigma_envelope.png](A_sigma_envelope.png) | Zero-density envelope A(sigma) with binding constraints colored by source |
-| [sensitivity_heatmap.png](sensitivity_heatmap.png) | Sensitivity heat map showing the cone of nonzero d(theta)/dA(sigma) |
-| [alpha_sensitivity.png](alpha_sensitivity.png) | Partial derivatives of alpha(sigma) with respect to A and B = A* |
-| [succession_bottlenecks.png](succession_bottlenecks.png) | Succession of bottlenecks as the cusp is progressively lowered |
+| [figures/A_sigma_envelope.png](figures/A_sigma_envelope.png) | Zero-density envelope A(sigma) with binding constraints colored by source |
+| [figures/sensitivity_heatmap.png](figures/sensitivity_heatmap.png) | Sensitivity heat map showing the cone of nonzero d(theta)/dA(sigma) |
+| [figures/alpha_sensitivity.png](figures/alpha_sensitivity.png) | Partial derivatives of alpha(sigma) with respect to A and B = A* |
+| [figures/succession_bottlenecks.png](figures/succession_bottlenecks.png) | Succession of bottlenecks as the cusp is progressively lowered |
 
 ## Code
 
-The computational pipeline is in [`../../compute/`](../../compute/):
+The computational pipeline is in [`../../../compute/`](../../../compute/):
 
 | Script | Purpose |
 |--------|---------|
-| `expdb_full_pipeline.py` | Full pipeline: A(sigma), A*(sigma), theta, sensitivity |
+| `pipeline.py` | Full pipeline: A(sigma), A*(sigma), theta, sensitivity |
 | `gap_test_harness.py` | Systematic check of unexploited GM interactions |
 | `sensitivity_map.py` | Fine-grained sensitivity computation |
-| `plot_A_envelope.py` | Figure 1 |
-| `plot_sensitivity_heatmap.py` | Figure 2 |
-| `plot_alpha_sensitivity.py` | Figure 3 |
-| `plot_succession.py` | Figure 4 |
-| `expdb/` | Clone of [teorth/expdb](https://github.com/teorth/expdb) with scipy-based cdd replacement |
+| `plots/plot_A_envelope.py` | Figure 1 |
+| `plots/plot_sensitivity_heatmap.py` | Figure 2 |
+| `plots/plot_alpha_sensitivity.py` | Figure 3 |
+| `plots/plot_succession.py` | Figure 4 |
+| `vendor/expdb/` | Clone of [teorth/expdb](https://github.com/teorth/expdb) with scipy-based cdd replacement |
 
 ## Key Results
 

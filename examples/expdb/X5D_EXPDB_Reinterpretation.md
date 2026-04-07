@@ -1,4 +1,4 @@
-# The EXPDB Skyline: A Polyhedral Reinterpretation of the Exponent Database as a Five-Dimensional Geometric Flow
+# X5D-EXPDB: A Polyhedral Reinterpretation of the Exponent Database as a Five-Dimensional Geometric Flow
 
 ---
 
@@ -101,8 +101,8 @@ $$
 
 that descends the *dimension ladder* $\mathbb{R}^5 \to \mathbb{R}^3 \to
 \mathbb{R}^1 \to \mathbb{R}^0$.  We call the collection of boundary
-functions obtained at each stage the *EXPDB Skyline*, and we show that the
-Skyline is a monotone invariant of a contraction flow on a product lattice.
+functions obtained at each stage the *X5D-EXPDB*, and we show that the
+X5D-EXPDB is a monotone invariant of a contraction flow on a product lattice.
 
 
 ### 1.3 Why a Geometric Reinterpretation?
@@ -121,7 +121,7 @@ $\mathcal{P}$ is a fixed point of the composition.
 **Information loss.**  The pipeline produces bounds of decreasing
 dimensionality: five-dimensional regions, three-dimensional regions,
 one-dimensional functions, and finally a single scalar.  How much
-information is lost at each stage?  The Skyline framework makes this
+information is lost at each stage?  The X5D framework makes this
 precise: each projection discards exactly those constraints that involve the
 dropped coordinates, and the loss is irreversible (the three-dimensional
 shadow does not determine $\mathcal{P}$).
@@ -129,7 +129,7 @@ shadow does not determine $\mathcal{P}$).
 **Duality.**  The exponent pair hull and the beta envelope are related by a
 classical projective duality (point $\leftrightarrow$ tangent line), but
 this duality has not been connected to the higher-dimensional polyhedral
-structure.  The Skyline framework embeds this duality into a
+structure.  The X5D framework embeds this duality into a
 section-projection adjunction between $\mathbb{R}^2$ and $\mathbb{R}^5$.
 
 **Optimality.**  Given a fixed set of literature axioms, is the EXPDB
@@ -141,7 +141,7 @@ results) or changing the coordinate system (new auxiliary variables).
 
 **Comparison with other frameworks.**  The Factor Skyline project [ET]
 performs an analogous geometric reinterpretation for multiplicative number
-theory.  A unified description of both Skylines — as monotone flows on
+theory.  A unified description of both X5D constructions — as monotone flows on
 rational polyhedra — requires the kind of coordinate-free geometric language
 that the present paper develops.
 
@@ -153,7 +153,7 @@ We emphasize what this paper does and does not do.
 We *do* provide a complete structural analysis of the EXPDB codebase,
 identifying every module, transformation, and data flow.  We *do* define the
 master polytope $\mathcal{P}$ and show that all EXPDB objects are derived
-from it.  We *do* formalize the Skyline as a monotone invariant and prove
+from it.  We *do* formalize the X5D-EXPDB signature as a monotone invariant and prove
 its convergence.  We *do* classify the transformations by their geometric
 type (linear, affine, nonlinear; convexity-preserving or not;
 monotone or not) and identify dualities, envelopes, and fixed points.
@@ -194,7 +194,7 @@ polyhedral complexes whose combinatorics encode algebraic information.  In
 the theory of Newton polytopes, the exponents of a multivariate polynomial
 form a polytope whose faces control the polynomial's asymptotic behavior.
 
-The closest precedent within number theory is the Factor Skyline framework
+The closest precedent within number theory is the Factor X5D framework
 [ET], which reinterprets multiplicative number theory bounds as projections
 of a polyhedral region.  We compare the two frameworks in Section 9.
 
@@ -219,13 +219,13 @@ hulls, LV regions, ZLV regions, ZD envelopes, ZDE envelopes, and prime gap
 bounds — is a projection, section, or envelope of $\mathcal{P}$, and
 describes the specific operation in each case.
 
-**Section 6** defines the EXPDB Skyline formally, proves it is a monotone
+**Section 6** defines the X5D-EXPDB signature formally, proves it is a monotone
 invariant of the pipeline, and establishes convergence to a fixed point.
 
 **Section 7** develops consequences: the dimension ladder, the duality web,
 the flow structure, and the fixed-point hierarchy.
 
-**Section 8** compares the EXPDB Skyline with the Factor Skyline.
+**Section 8** compares X5D-EXPDB with the Factor Skyline.
 
 **Section 9** discusses future directions, including algorithmic
 improvements, formal verification opportunities, and open questions.
@@ -1837,7 +1837,7 @@ $A(\sigma)$ from exponent pairs via closed-form rational expressions:
   $A(\sigma) \le 4k/(2(1+k)\sigma - 1 - l)$ for suitable EP $(k,l)$.
 
 These are not derived from $\mathcal{P}$ via projection; they are
-independent paths from EP data to ZD bounds.  In the Skyline framework,
+independent paths from EP data to ZD bounds.  In the X5D framework,
 they contribute additional rational curves to the family over which the
 lower envelope is taken.
 
@@ -1928,7 +1928,7 @@ $\mathcal{P}$ in the same direct sense as the LV and energy regions.
 Instead, they occupy a *dual* position: they generate constraints on
 $\mathcal{P}$ (via `ep_to_lver` and `beta_to_zlv`), and they are
 themselves derived from a separate two-dimensional construction.
-Nevertheless, they fit naturally into the Skyline framework as objects
+Nevertheless, they fit naturally into the X5D framework as objects
 determined by the *input data* to $\mathcal{P}$ rather than by its
 *projections*.
 
@@ -2082,21 +2082,21 @@ single table.
 Every row is either a projection, an envelope, a supremum, or a composition
 thereof, confirming Theorem 4.9.
 
-## 6. The EXPDB Skyline Invariant
+## 6. The X5D-EXPDB Invariant
 
-This section formally defines the EXPDB Skyline, establishes it as a
+This section formally defines the X5D-EXPDB signature, establishes it as a
 monotone invariant of the pipeline, and proves that the iterative flow
 converges to a fixed point.
 
 
-### 6.1 Definition of the Skyline
+### 6.1 Definition of the X5D-EXPDB Signature
 
 We fix a literature hypothesis set $\mathcal{H}_0$ (the output of
 `literature.py`) and a domain $\mathcal{D} \subseteq [\frac{1}{2}, 1]
 \times [0, T]$ in $(\sigma, \tau)$-space.
 
-**Definition 6.1** (EXPDB Skyline).
-The *EXPDB Skyline* associated to $(\mathcal{H}_0, \mathcal{D})$ is the
+**Definition 6.1** (X5D-EXPDB).
+The *X5D-EXPDB* associated to $(\mathcal{H}_0, \mathcal{D})$ is the
 tuple
 
 $$
@@ -2128,7 +2128,7 @@ where:
 | ZDE estimate | $A^*$ | Piecewise-rational on $[\frac{1}{2}, 1]$ | $\mathrm{env}^-\bigl(\{\Phi_{\rho^*/\tau}(\cdot)/(1{-}\sigma)\}\bigr)$ (Section 5.7) |
 | Prime gap bound | $\theta$ | $\mathbb{R}$ | $\sup_\sigma \max(\alpha, \beta)$ (Section 5.9) |
 
-The Skyline is the complete collection of boundary objects produced by the
+The X5D-EXPDB is the complete collection of boundary objects produced by the
 pipeline at every level of the dimension ladder.
 
 **Remark 6.2.**  The components of $\Sigma$ are not independent.  By
@@ -2136,7 +2136,7 @@ Theorem 4.9, the components $R_{\mathrm{LV}}$, $R_{\mathrm{ZLV}}$, $A$,
 $A^*$, and $\theta$ are all determined by $\mathcal{P}$.  Conversely,
 $\mathcal{P}$ depends on $\mathcal{C}_{\mathrm{EP}}$, $\beta^*$, and
 $\mathcal{C}_{\mu}$ (which generate constraints on $\mathcal{P}$).  The
-Skyline records *all* intermediate objects, including those that are
+X5D-EXPDB records *all* intermediate objects, including those that are
 logically redundant, because each occupies a distinct position in the
 dimension ladder and because the pipeline produces them through distinct
 code paths.
@@ -2144,7 +2144,7 @@ code paths.
 
 ### 6.2 The State Lattice
 
-We equip the space of Skylines with the product partial order defined in
+We equip the space of X5D signatures with the product partial order defined in
 Section 2.8 (Definition 2.18).  Recall that the order on each component is
 "tighter is smaller":
 
@@ -2176,8 +2176,8 @@ both conventions by using the reversed inclusion order for hulls.
 ### 6.3 The Pipeline Operator $\Phi$
 
 The EXPDB pipeline defines a map $\Phi: \mathcal{L} \to \mathcal{L}$ that
-takes a Skyline state and produces a refined Skyline state.  We decompose
-$\Phi$ into nine component operators, one per Skyline component, applied in
+takes a X5D state and produces a refined X5D state.  We decompose
+$\Phi$ into nine component operators, one per X5D component, applied in
 the following order.
 
 **Stage 1: EP expansion.**
@@ -2406,7 +2406,7 @@ $\square$
 ### 6.6 Convergence
 
 **Theorem 6.6** (Finite convergence).
-Let $\Sigma_0$ be the initial Skyline state obtained from the literature
+Let $\Sigma_0$ be the initial X5D state obtained from the literature
 hypotheses $\mathcal{H}_0$.  The sequence
 $\Sigma_0, \Phi(\Sigma_0), \Phi^2(\Sigma_0), \ldots$ stabilizes: there
 exists $N \in \mathbb{N}$ such that $\Phi^N(\Sigma_0) = \Phi^{N+1}(\Sigma_0)$.
@@ -2463,16 +2463,16 @@ remaining stages.  In practice, $N$ is small (typically 5–10 for the EP
 loop).
 $\square$
 
-**Definition 6.7** (Skyline fixed point).
-The *Skyline fixed point* is $\Sigma^* = \lim_{n \to \infty} \Phi^n(\Sigma_0)
-= \Phi^N(\Sigma_0)$.  It is the tightest Skyline derivable from
+**Definition 6.7** (X5D fixed point).
+The *X5D fixed point* is $\Sigma^* = \lim_{n \to \infty} \Phi^n(\Sigma_0)
+= \Phi^N(\Sigma_0)$.  It is the tightest X5D-EXPDB derivable from
 $\mathcal{H}_0$ using the transformations available in EXPDB.
 
 
 ### 6.7 Uniqueness and Optimality
 
 **Proposition 6.8** (Uniqueness).
-The Skyline fixed point $\Sigma^*$ is the unique fixed point of $\Phi$ that
+The X5D fixed point $\Sigma^*$ is the unique fixed point of $\Phi$ that
 is reachable from $\Sigma_0$.
 
 *Proof.*
@@ -2495,7 +2495,7 @@ which is declared `NotImplementedError` in the current codebase) might yield
 a strictly tighter fixed point.
 
 **Remark 6.10** (Dependence on parameters).
-The Skyline $\Sigma^*$ depends on two classes of parameters:
+The X5D-EXPDB $\Sigma^*$ depends on two classes of parameters:
 - **Continuous parameters**: the $\tau_0$ choices in each
   `prove_zero_density` call and the domain $\mathcal{D}$.  Different
   choices yield different instances of $\mathcal{P}$ and hence different
@@ -2504,11 +2504,11 @@ The Skyline $\Sigma^*$ depends on two classes of parameters:
   problem (Section 9).
 - **Discrete parameters**: the truncation constants
   (`search_depth`, `BETA_TRUNCATION`, etc.).  Increasing these parameters
-  can only tighten the Skyline (more iterations of the EP loop, more
+  can only tighten the X5D-EXPDB signature (more iterations of the EP loop, more
   rescaling factors in raise-to-power), but they increase computation time.
 
 
-### 6.8 Structural Properties of the Skyline
+### 6.8 Structural Properties of the X5D-EXPDB Signature
 
 We record several structural properties that follow from the definitions and
 the results of Sections 4–5.
@@ -2550,10 +2550,10 @@ then $\mathcal{P}(\mathcal{H}_0, \mathcal{D}_1) \subseteq
 propagates to all downstream components.
 
 **Proposition 6.14** (Factorization through $\mathcal{P}$).
-The Skyline factors through the master region: defining
+The X5D-EXPDB factors through the master region: defining
 $\mathrm{Sky}(\mathcal{P}) = (R_{\mathrm{LV}}, R_{\mathrm{ZLV}}, A, A^*,
 \theta)$ as the tuple of components determined by $\mathcal{P}$ alone
-(Theorem 4.9), the full Skyline satisfies
+(Theorem 4.9), the full X5D-EXPDB satisfies
 
 $$
 \Sigma^*
@@ -2568,11 +2568,11 @@ master region $\mathcal{P}^*$ is the bottleneck through which all upstream
 information passes to produce downstream bounds.
 
 
-### 6.9 The Skyline as a Geometric Object
+### 6.9 The X5D-EXPDB Signature as a Geometric Object
 
-We conclude by describing the Skyline itself as a geometric entity.
+We conclude by describing the X5D-EXPDB signature itself as a geometric entity.
 
-The Skyline $\Sigma^*$ is a heterogeneous geometric object — a tuple of
+The X5D-EXPDB signature $\Sigma^*$ is a heterogeneous geometric object — a tuple of
 shapes of different dimensions living in different ambient spaces.  It can
 be visualized as a *stratified boundary*:
 
@@ -2596,17 +2596,17 @@ be visualized as a *stratified boundary*:
 
 The strata are connected by the projection and envelope maps described in
 Section 5.  Information flows strictly from higher strata to lower strata
-(Remark 5.1).  The Skyline is, in this sense, a *filtered geometric object*:
+(Remark 5.1).  The X5D-EXPDB is, in this sense, a *filtered geometric object*:
 a sequence of boundaries of decreasing dimension, each derived from the one
 above, terminating in a point.
 
-The name "Skyline" is motivated by this picture: viewed from the
+The name "X5D-EXPDB" is motivated by this picture: viewed from the
 $\sigma$-axis, the successive boundaries form a descending profile — the
 silhouette of the master polytope as seen through a hierarchy of projections.
 
 ## 7. Consequences
 
-This section develops the structural consequences of the Skyline framework
+This section develops the structural consequences of the X5D framework
 established in Sections 4–6.  We examine the dimension ladder, the duality
 web, the flow structure, and the fixed-point hierarchy — four perspectives
 on a single geometric object.
@@ -2615,7 +2615,7 @@ on a single geometric object.
 ### 7.1 The Dimension Ladder
 
 The EXPDB pipeline produces objects in five distinct ambient dimensions.
-The Skyline framework organizes these into a strictly ordered chain, which
+The X5D framework organizes these into a strictly ordered chain, which
 we call the *dimension ladder*.
 
 **Definition 7.1** (Dimension ladder).
@@ -2691,7 +2691,7 @@ do not propagate upward.  Consequently:
 
 ### 7.2 The Duality Web
 
-Three dualities organize the Skyline.  Each exchanges a "primal" object
+Three dualities organize the X5D-EXPDB signature.  Each exchanges a "primal" object
 with a "dual" object of the same or different type.
 
 #### 7.2.1 EP $\leftrightarrow$ Beta: Point-Line Duality
@@ -2890,7 +2890,7 @@ the intersection of the projections when all constraints are included).
 
 ### 7.4 Fixed Points and Attractors
 
-The Skyline $\Sigma^*$ is the fixed point of the pipeline operator $\Phi$
+The X5D-EXPDB $\Sigma^*$ is the fixed point of the pipeline operator $\Phi$
 (Theorem 6.6).  We now describe the fixed-point structure at each level of
 the dimension ladder.
 
@@ -2937,7 +2937,7 @@ constraint shrinks it.  The *conjectural limiting region*
 $\mathcal{P}_\infty$ is the intersection of $\mathcal{B}$ with the "true"
 set of constraints — i.e., those that hold for all values of the parameters,
 not merely those known from the literature.  The relationship between
-$\mathcal{P}^*$ (the Skyline fixed point) and $\mathcal{P}_\infty$ is:
+$\mathcal{P}^*$ (the X5D fixed point) and $\mathcal{P}_\infty$ is:
 
 $$
 \mathcal{P}_\infty
@@ -2954,7 +2954,7 @@ literature using the current transformation set.
 #### 7.4.5 The scalar attractor
 
 The prime gap bound $\theta$ is a monotonically non-increasing function of
-the Skyline state (Theorem 6.5).  The conjectural limiting value
+the X5D state (Theorem 6.5).  The conjectural limiting value
 $\theta_\infty$ is determined by $\mathcal{P}_\infty$ via the chain of
 projections, suprema, and envelopes.  The current best $\theta^*$ satisfies
 $\theta^* \ge \theta_\infty$, with the gap determined by the quality of the
@@ -2989,12 +2989,12 @@ the EP attractor at dimension 2.
 
 ### 7.5 Sensitivity Structure
 
-We conclude by describing how the Skyline responds to perturbations of
+We conclude by describing how the X5D-EXPDB signature responds to perturbations of
 the axiom set.
 
 **Definition 7.4** (Marginal value of a hypothesis).
 Let $h$ be a hypothesis in $\mathcal{H}_0$.  The *marginal value of $h$
-at level $\ell$* is the change in the $\ell$-th Skyline component when $h$
+at level $\ell$* is the change in the $\ell$-th X5D component when $h$
 is removed:
 
 $$
@@ -3028,7 +3028,7 @@ $\square$
 This sparsity has a practical consequence: the dependency-tracking mechanism
 in EXPDB (the `dependencies` attribute and the `track_dependencies` flag in
 the distributive-law intersection) identifies precisely which literature
-results are load-bearing for the final bound $\theta$.  The Skyline
+results are load-bearing for the final bound $\theta$.  The X5D-EXPDB
 framework interprets this tracking geometrically: a hypothesis is
 load-bearing if and only if it contributes a half-space to $\mathcal{P}$
 that is active (i.e., the half-space's bounding hyperplane intersects
@@ -3041,7 +3041,7 @@ those whose removal does not change $\theta$.  Identifying redundant
 hypotheses is valuable for proof simplification (finding minimal axiom sets)
 and for understanding which literature results are truly essential.  The
 `proof_complexity` and `proof_depth` metrics on the Hypothesis DAG
-(Section 3.1) provide heuristic proxies for this; the Skyline framework
+(Section 3.1) provide heuristic proxies for this; the X5D framework
 provides the exact geometric criterion.
 
 ## 8. Comparison with the Factor Skyline
@@ -3095,7 +3095,7 @@ The computational approach proceeds as follows:
    verify that the resulting factorization is valid.
 
 This pipeline — sieve, LP, dual certificate, rounding — is the Factor
-Skyline analogue of EXPDB's pipeline of axiom seeding, constraint
+X5D analogue of EXPDB's pipeline of axiom seeding, constraint
 intersection, projection, and envelope extraction.
 
 
@@ -3108,7 +3108,7 @@ We identify five structural parallels between the two systems.
 Both systems operate on a polyhedral feasible region defined by rational
 half-spaces.
 
-| Feature | EXPDB Skyline | Factor Skyline |
+| Feature | X5D-EXPDB | Factor Skyline |
 |---------|--------------|----------------|
 | Ambient dimension | 5 (fixed: $\sigma, \tau, \rho, \rho^*, s$) | $N - T + 1$ (variable: one dimension per potential factor $j$) |
 | Number of constraints | $O(\text{literature results} \times \text{rescalings})$ | $O(\pi(P))$ (one per small prime) |
@@ -3203,7 +3203,7 @@ assembled, the LP solver finds the optimum in one call.  There is no
 iterative refinement or feedback.
 
 The greedy algorithm (`greedy.py`) provides an alternative to the LP, but
-it is a heuristic primal method, not an iterative flow in the Skyline sense.
+it is a heuristic primal method, not an iterative flow in the X5D sense.
 
 #### 8.3.3 Non-convex regions vs. convex polytope
 
@@ -3247,7 +3247,7 @@ a rigorous bound when the dual variables are monotone).
 Despite these differences, both systems can be described in a common
 abstract framework.
 
-**Definition 8.1** (Skyline system).
+**Definition 8.1** (X5D system).
 A *skyline system* is a tuple $(\mathcal{A}, \mathcal{C}, \mathcal{P},
 \pi, \phi)$ where:
 
@@ -3277,7 +3277,7 @@ $\phi(\pi(\mathcal{P}))$.
 | $d$ | 5 | $N - T + 1$ |
 | $\pi$ | $\pi_{\{0,1,2\}} \circ \Phi_{\rho/\tau} \circ \mathrm{env}^-$ | LP objective $\sum_j x_j$ |
 | $\phi$ | $\sup_\sigma \max(\alpha, \beta)$ | Identity (the LP value is the scalar) |
-| Skyline | Stratified boundary (Section 6.9) | Upper boundary of LP polytope |
+| X5D-EXPDB | Stratified boundary (Section 6.9) | Upper boundary of LP polytope |
 
 Both systems satisfy the *skyline monotonicity property*: adding an axiom
 (a new literature result or a new prime constraint) can only tighten the
@@ -3350,7 +3350,7 @@ number theory.
 
 ### 8.6 Summary
 
-The EXPDB Skyline and the Factor Skyline are instantiations of the same
+The X5D-EXPDB and the Factor Skyline are instantiations of the same
 abstract pattern: a polyhedral feasible region defined by rational axioms,
 reduced to a scalar bound by a chain of geometric operations, with a
 monotonicity guarantee that ensures the bound improves as axioms accumulate.
@@ -3367,7 +3367,7 @@ We have shown that the EXPDB pipeline operates on a single five-dimensional
 polyhedral region $\mathcal{P}$, that all intermediate and final objects are
 projections, envelopes, or scalar extractions of $\mathcal{P}$, and that the
 pipeline is a monotone contraction converging to a unique fixed point — the
-EXPDB Skyline.  In this concluding section we discuss the implications of
+X5D-EXPDB.  In this concluding section we discuss the implications of
 this geometric picture, identify concrete opportunities for improvement, and
 pose open questions.
 
@@ -3390,7 +3390,7 @@ path leading to the critical $\sigma$-value where $\theta$ is attained
 
 This suggests a *targeting principle*: new literature results are most
 valuable when they tighten $\mathcal{P}$ along the specific boundary faces
-that participate in the optimal projection path.  The Skyline framework
+that participate in the optimal projection path.  The X5D framework
 makes this targeting precise: the dependency-tracking mechanism
 (`track_dependencies=True` in the distributive-law intersection) identifies
 exactly which input half-spaces are active at the optimum.  A researcher
@@ -3423,19 +3423,19 @@ the current state of available joint constraints in the literature.
 ### 9.2 Specific Improvements to EXPDB
 
 The codebase contains several features marked as unimplemented (`TODO`,
-`NotImplementedError`) that the Skyline framework helps to contextualize.
+`NotImplementedError`) that the X5D framework helps to contextualize.
 
 #### 9.2.1 Huxley subdivision
 
 The function `apply_huxley_subdivision` (`large_values.py`, line 422) is
-declared but raises `NotImplementedError`.  In the Skyline framework, Huxley
+declared but raises `NotImplementedError`.  In the X5D framework, Huxley
 subdivision is a refinement of the LV region that splits polytope faces
 along hyperplanes and re-optimizes.  Geometrically, it introduces new
 half-spaces that subdivide $\mathcal{P}$ without adding new literature
 axioms — it is a *structural refinement* of the polyhedral decomposition
 rather than a *data refinement* from new axioms.
 
-The Skyline framework predicts that Huxley subdivision can improve the ZD
+The X5D framework predicts that Huxley subdivision can improve the ZD
 envelope $A(\sigma)$ by introducing finer polytope edges along which the
 rational supremum $\Phi_{\rho/\tau}$ is evaluated.  The improvement is
 bounded by the width of the current polytope faces in the $\tau$ direction:
@@ -3451,7 +3451,7 @@ derivation (Section 5.6) — is currently chosen manually for each
 decompositions and hence different ZD estimates, all of which enter the
 lower envelope.
 
-In the Skyline framework, $\tau_0$ parameterizes a family of polytope slices
+In the X5D framework, $\tau_0$ parameterizes a family of polytope slices
 of $\mathcal{P}$.  The optimal $\tau_0(\sigma)$ is the one that minimizes
 $\Phi_{\rho/\tau}$ at each $\sigma$ — i.e., the choice that places the
 $\tau$-domain boundary at the point where the supremum $\rho/\tau$ is
@@ -3474,7 +3474,7 @@ The comment at `bound_beta.py`, line 83 reads: "TODO: create a method to
 implement the B-process for beta bounds."  Currently, the van der Corput
 B-process is implemented only for exponent pairs (the involution
 $(k, l) \mapsto (l - 1/2, k + 1/2)$), not for beta bounds directly.  In the
-Skyline framework, the B-process on beta bounds would correspond to a
+X5D framework, the B-process on beta bounds would correspond to a
 symmetry of the beta envelope under the change of variables
 $\alpha \mapsto 1 - \alpha$, combined with an affine shift.  Implementing
 this would add new affine pieces to the beta envelope that are currently
@@ -3485,7 +3485,7 @@ potentially accelerate convergence.
 #### 9.2.4 Lean proof generation
 
 The comment at `hypotheses.py`, line 42 reads: "TODO: add `Lean proof`
-attribute."  The Skyline framework suggests a strategy for Lean proof
+attribute."  The X5D framework suggests a strategy for Lean proof
 generation: since every derived bound factors through $\mathcal{P}$
 (Proposition 6.14), a formal proof needs to verify only three types of
 steps:
@@ -3499,7 +3499,7 @@ steps:
    piecewise-rational functions (an algebraic identity, verifiable by
    evaluation at finitely many rational test points).
 
-The modular structure of the Skyline — axioms $\to$ half-spaces $\to$
+The modular structure of X5D-EXPDB — axioms $\to$ half-spaces $\to$
 intersection $\to$ projection $\to$ envelope $\to$ scalar — decomposes the
 proof obligation into a small number of generic lemmas (valid for any
 polyhedral system) and a larger number of instance-specific axiom
@@ -3538,7 +3538,7 @@ $\mathcal{P}$ along the optimal projection path.  Standard LP sensitivity
 analysis would quantify the marginal improvement in $\Phi_{\rho/\tau}$
 from tightening each constraint — providing a direct measure of the marginal
 value of each literature hypothesis (Definition 7.4) without requiring the
-full Skyline to be recomputed.
+full X5D-EXPDB to be recomputed.
 
 #### 9.3.3 Column generation
 
@@ -3560,7 +3560,7 @@ $\mathcal{P}$ at larger $\tau$ values.
 The current master region lives in $\mathbb{R}^5$.  If new families of
 estimates are discovered that introduce additional parameters beyond
 $(\sigma, \tau, \rho, \rho^*, s)$, the framework extends naturally to
-$\mathbb{R}^{5+k}$ by adding coordinates and constraints.  The Skyline
+$\mathbb{R}^{5+k}$ by adding coordinates and constraints.  The X5D-EXPDB
 machinery — intersection, projection, rational supremum, envelope — works
 in any dimension.  The computational cost of vertex enumeration and
 projection grows with dimension, but the structural results (monotonicity,
@@ -3573,15 +3573,15 @@ could accommodate multiple scalar outputs — e.g., prime gap bounds at
 different exponents, or bounds on different number-theoretic quantities —
 by defining multiple reduction maps from $\mathcal{P}$.  Each reduction
 map would produce its own 1D envelope, and the collection of all such
-envelopes would form an *extended Skyline*.
+envelopes would form an *extended X5D-EXPDB*.
 
-#### 9.4.3 Time-varying Skylines
+#### 9.4.3 Time-varying X5D-EXPDB signatures
 
 The literature hypothesis set $\mathcal{H}_0$ grows over time as new results
-are published.  The Skyline $\Sigma^*(\mathcal{H}_0)$ is a monotone function
+are published.  The X5D-EXPDB signature $\Sigma^*(\mathcal{H}_0)$ is a monotone function
 of $\mathcal{H}_0$ (Proposition 6.12): as the literature expands, the
-Skyline tightens.  One could define the *Skyline trajectory*
-$\{\Sigma^*(t)\}_{t \ge 1920}$ as the Skyline evaluated on the hypothesis
+signature tightens.  One could define the *X5D-EXPDB trajectory*
+$\{\Sigma^*(t)\}_{t \ge 1920}$ as the X5D-EXPDB signature evaluated on the hypothesis
 set available at time $t$.  This trajectory is a descending path in the
 state lattice $\mathcal{L}$ and provides a quantitative history of progress
 in the field — a "computational time series" of analytic number theory.
@@ -3589,10 +3589,10 @@ in the field — a "computational time series" of analytic number theory.
 
 ### 9.5 Open Questions
 
-We conclude with five open questions that the Skyline framework raises.
+We conclude with five open questions that the X5D framework raises.
 
 **Question 1** (Finite determination).
-*Is the Skyline fixed point $\Sigma^*$ determined by finitely many
+*Is the X5D fixed point $\Sigma^*$ determined by finitely many
 "extremal" literature results?*
 
 By Proposition 7.5, the scalar $\theta$ depends on finitely many hypotheses.
@@ -3613,7 +3613,7 @@ case, a polytope in $\mathbb{R}^5$ with $n$ facets can have
 $O(n^{\lfloor 5/2 \rfloor}) = O(n^2)$ vertices (by the upper bound theorem
 for polytopes).  Does the specific structure of EXPDB constraints yield a
 better bound?  The answer would determine the computational complexity of
-the Skyline computation.
+the X5D-EXPDB signature computation.
 
 **Question 3** (Algebraic fixed point).
 *Can the EP $\leftrightarrow$ Beta feedback loop be replaced by a single
@@ -3628,8 +3628,8 @@ Beta $\to$ EP duality).  Solving this system directly — rather than
 iterating to convergence — would yield the exact fixed hull in one step.
 Is this system tractable?  What is its algebraic degree?
 
-**Question 4** (Skyline distance).
-*Is there a natural metric on the space of Skylines that quantifies the
+**Question 4** (X5D distance).
+*Is there a natural metric on the space of X5D signatures that quantifies the
 distance between the current state $\Sigma^*$ and the conjectural optimum
 $\Sigma_\infty$?*
 
@@ -3832,9 +3832,9 @@ primary geometric role.
 | Best ZD selection | §5.6.5 | `compute_best_zero_density` | `derived.py` | 828 |
 
 
-### A.7 Skyline Components: Code to Definition Mapping
+### A.7 X5D-EXPDB Components: Code to Definition Mapping
 
-| Skyline component | Definition | Construction code | Selection code |
+| X5D component | Definition | Construction code | Selection code |
 |-------------------|-----------|-------------------|---------------|
 | $\mathcal{C}_{\mathrm{EP}}$ | Def. 6.1 | `compute_exp_pairs` (exponent\_pair.py:72) | `compute_convex_hull` (exponent\_pair.py:122) |
 | $\beta^*$ | Def. 6.1 | `exponent_pairs_to_beta_bounds` (bound\_beta.py:98) | `compute_best_beta_bounds` (bound\_beta.py:128) |

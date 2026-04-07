@@ -1,67 +1,85 @@
-# README: The EXPDB 5D POLYHEDRAL
+# EXPDB 5D Polyhedral — The X5D Framework
 
-## Overview
+The **X5D framework** is an architectural language for describing dynamical
+systems and analytic pipelines as compositions of channels, envelopes, and
+constraint surfaces. This repository contains the framework specification
+together with its first major worked example, **X5D-EXPDB**: a polyhedral
+reinterpretation of the Tao–Trudgian–Yang Analytic Number Theory Exponent
+Database (EXPDB) in which every analytic object computed by the EXPDB
+pipeline arises as a projection or envelope of one master polytope
+\( \mathcal{P} \subset \mathbb{R}^5 \).
 
-This repo contains the complete geometric reinterpretation of the 
-**Exponent Database (EXPDB)** as a **five‑dimensional polyhedral flow**, and 
-**Erdős–Guy–Selfridge pipeline**.
-
-The central result is the **EXPDB 5D Polyhedral**:  
-a single 5D polytope whose projections and envelopes reproduce every analytic  
-object in the EXPDB pipeline — exponent pairs, beta bounds, mu bounds,  
-large value regions, zero density envelopes, and the prime gap exponent.
-
-This is the **second major example** of the **Architectural Distillation (AD)** framework.
-
----
-
-## Contents
-
-### `EXPDB-A-5D-Polyhedral-Reinterpretation.md`
-A full research paper presenting:
-
-- the EXPDB pipeline as a polyhedral computation engine  
-- the master polytope \( \mathcal{P} \subset \mathbb{R}^5 \)  
-- the projection/envelope ladder \( \mathbb{R}^5 \to \mathbb{R}^3 \to \mathbb{R}^1 \to \mathbb{R}^0 \)  
-- the EXPDB Skyline invariant  
-- the monotone contraction flow and fixed‑point theorem  
-- the structural comparison with the FS–EGS reinterpretation  
-- consequences, dualities, and future directions  
-
-This paper is the authoritative description of the EXPDB Skyline.
+The repository also includes a computational pipeline and an empirical
+analysis applying X5D-EXPDB to the post–Guth–Maynard zero-density
+landscape.
 
 ---
 
-### `invariant.md`
-A concise, standalone definition of the **EXPDB 5D Polyhedral invariant**:
+## Repository Map
 
-- the master polytope  
-- all derived objects as projections/envelopes  
-- the Skyline tuple  
-- the monotonicity theorem  
-- the fixed‑point property  
-
-This file mirrors the role of `invariant.md` in the EGS folder.
+```
+.
+├── README.md
+├── LICENSE
+├── .gitignore
+│
+├── framework/                       The X5D framework specification
+│   └── X5D_Framework.md
+│
+├── examples/                        Worked examples of the X5D framework
+│   ├── README.md
+│   └── expdb/                       X5D-EXPDB
+│       ├── README.md
+│       ├── X5D_EXPDB_Reinterpretation.md
+│       ├── invariant.md
+│       ├── NEXT_STEPS.md
+│       └── analysis/                Empirical Guth–Maynard analysis
+│           ├── README.md
+│           ├── GuthMaynard_BindingConstraints.md
+│           ├── GuthMaynard_EXPDB_Analysis.md
+│           ├── GuthMaynard_Pipeline_Report.txt
+│           └── figures/
+│
+└── compute/                         Computational pipeline
+    ├── README.md
+    ├── pipeline.py
+    ├── gap_test_harness.py
+    ├── sensitivity_map.py
+    ├── plots/
+    ├── archive/                     Earlier pipeline iterations
+    │   └── README.md
+    └── vendor/                      Vendored upstream
+        ├── README.md
+        └── expdb/                   Clone of teorth/expdb
+```
 
 ---
 
-## Relation to the Architectural Distillation (AD) Framework
+## Entry Points
 
-The EXPDB Skyline is the second demonstration of the FS method:
+- **The framework**: [`framework/X5D_Framework.md`](framework/X5D_Framework.md)
+  — the architectural language: channels, envelopes, constraint surfaces,
+  six evaluation criteria, the seven structural poles.
 
-1. **EGS** — reinterpretation of the Erdős–Guy–Selfridge pipeline  
-2. **EXPDB Skyline** — reinterpretation of the Exponent Database  
-3. **(forthcoming)** — reinterpretation of the Erdős Discrepancy pipeline  
+- **The X5D-EXPDB reinterpretation**:
+  [`examples/expdb/`](examples/expdb/) — the master polytope
+  \( \mathcal{P} \subset \mathbb{R}^5 \), the projection/envelope ladder,
+  the X5D invariant, the monotone contraction flow, and the fixed-point
+  theorem.
 
-Together, these examples show that many analytic pipelines can be understood  
-as **flows on rational polyhedral regions**, with:
+- **Empirical analysis**:
+  [`examples/expdb/analysis/`](examples/expdb/analysis/) — binding
+  constraints and sensitivity after Guth–Maynard (2024).
 
-- axioms → half‑spaces  
-- intersection → master region  
-- projection → lower‑dimensional shadows  
-- envelope → boundary functions  
-- scalar extraction → final bound  
-
-The EXPDB 5D Polyhedral extends this paradigm to analytic number theory.
+- **Computational pipeline**: [`compute/`](compute/) — runnable Python
+  scripts that compute \( A(\sigma) \), \( A^*(\sigma) \), \( \theta \),
+  and the figures.
 
 ---
+
+## Status
+
+Active research repository. The X5D framework is described in
+`framework/X5D_Framework.md`. X5D-EXPDB is the first complete worked
+example. Additional examples (Erdős–Guy–Selfridge, Erdős discrepancy)
+are forthcoming.

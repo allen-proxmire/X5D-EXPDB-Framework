@@ -1,4 +1,4 @@
-# How Guth–Maynard (2024) Reshapes the EXPDB Skyline: A Structural Analysis
+# How Guth–Maynard (2024) Reshapes X5D-EXPDB: A Structural Analysis
 
 Allen Proxmire
 
@@ -8,7 +8,7 @@ April 2026
 
 ## 1. What This Document Is and Is Not
 
-This document analyzes how the Guth–Maynard (2024) large value estimate fits into the EXPDB pipeline as described in the EXPDB-Skyline paper. It uses the polyhedral framework (the master region $\mathcal{P} \subset \mathbb{R}^5$) to understand which constraints are tightened, how the effect propagates, and what the next bottleneck is.
+This document analyzes how the Guth–Maynard (2024) large value estimate fits into the EXPDB pipeline as described in the X5D-EXPDB paper. It uses the polyhedral framework (the master region $\mathcal{P} \subset \mathbb{R}^5$) to understand which constraints are tightened, how the effect propagates, and what the next bottleneck is.
 
 **What this document does:**
 - Identifies the specific half-space that Guth–Maynard adds to $\mathcal{P}$.
@@ -132,7 +132,7 @@ After incorporating Guth–Maynard, the constraints on $\mathcal{P}$ that are *b
 
 2. **Zero-density energy estimates:** The $A^*(\sigma)$ function, which enters the $\theta$ computation through the $\alpha(\sigma)$ and $\beta(\sigma)$ formulas. The binding constraints for $A^*$ come from the energy region $R_{\text{energy}} = \pi_{\sigma,\tau,\rho^*}(\mathcal{P})$, which is the *complementary* projection to $R_{\text{LV}}$.
 
-3. **Exponent pair constraints:** The EP hull constrains $\mathcal{P}$ through the lifted EP-to-LVER construction (Section 4.3.4 of the EXPDB-Skyline paper). The specific binding EPs depend on $\sigma^*$.
+3. **Exponent pair constraints:** The EP hull constrains $\mathcal{P}$ through the lifted EP-to-LVER construction (Section 4.3.4 of the X5D-EXPDB paper). The specific binding EPs depend on $\sigma^*$.
 
 4. **Heath-Brown energy relations:** The direct LVER constraints coupling $\rho$, $\rho^*$, and $s$ through the $s \leq f(\rho, \tau)$ relations. These are binding when the $s$-coordinate couples the LV and energy projections.
 
@@ -148,7 +148,7 @@ After Guth–Maynard, the constraints that are *slack* (not binding at $\sigma^*
 
 ### 4.3 The Binding Constraint Structure
 
-The binding constraints form a *minimal determining set* — the smallest collection of literature results that determines the current value of $\theta$. Proposition 6.12 of the EXPDB-Skyline paper guarantees that this set is monotone in the inclusion order: adding results can only tighten $\theta$.
+The binding constraints form a *minimal determining set* — the smallest collection of literature results that determines the current value of $\theta$. Proposition 6.12 of the X5D-EXPDB paper guarantees that this set is monotone in the inclusion order: adding results can only tighten $\theta$.
 
 The post-Guth–Maynard binding set is expected to have the structure:
 
@@ -262,4 +262,4 @@ If executed, this analysis would constitute a legitimate computational contribut
 
 3. **The EXPDB pipeline has parameters** (truncation depth, $\tau_0$ selection, etc.) that affect the output. The binding constraints may be parameter-dependent.
 
-4. **The Guth–Maynard result may interact with other recent results** (e.g., new exponent pairs, new additive energy bounds) that have been added to EXPDB since the EXPDB-Skyline paper was written. The full analysis should use the *current* EXPDB literature set, not the one from the paper.
+4. **The Guth–Maynard result may interact with other recent results** (e.g., new exponent pairs, new additive energy bounds) that have been added to EXPDB since the X5D-EXPDB paper was written. The full analysis should use the *current* EXPDB literature set, not the one from the paper.
