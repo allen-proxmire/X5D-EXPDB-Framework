@@ -1,4 +1,5 @@
 # EXPDB 5D Polyhedral — The X5D Framework
+[![DOI](https://zenodo.org/badge/1203337814.svg)](https://doi.org/10.5281/zenodo.19454867)
 
 The **X5D framework** is an architectural language for describing dynamical
 systems and analytic pipelines as compositions of channels, envelopes, and
