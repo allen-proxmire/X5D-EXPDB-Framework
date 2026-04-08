@@ -31,7 +31,12 @@
       "Bash(mv from_AD/README.md docs/AD_original_README.md)",
       "Bash(rm -rf from_AD/ad_examples from_AD/LICENSE)",
       "Bash(rmdir from_AD/ad_core from_AD/ad_process from_AD/docs)",
-      "Bash(rmdir from_AD)"
+      "Bash(rmdir from_AD)",
+      "Bash(python:*)",
+      "Bash(ls -la figure_1*.png)",
+      "Bash(ls \"C:/Users/allen/GitHub/X5D EXPDB Framework/\"*.md)",
+      "Bash(ls \"C:/Users/allen/GitHub/X5D EXPDB Framework/\"*.tex)",
+      "Bash(awk 'NR==191 || NR==224 || NR==723' \"C:/Users/allen/GitHub/X5D EXPDB Framework/X5D_EXPDB_Reinterpretation.tex\")"
     ]
   }
 }

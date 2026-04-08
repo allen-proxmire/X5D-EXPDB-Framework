@@ -1,4 +1,4 @@
-# X5D-EXPDB: A Polyhedral Reinterpretation of the Exponent Database as a Five-Dimensional Geometric Flow
+# X5D: A Polyhedral Reinterpretation of the Exponent Database as a Five-Dimensional Geometric Flow
 
 ---
 
@@ -43,18 +43,38 @@ polyhedral region — and that this reinterpretation clarifies the system's
 convergence behavior, its information-theoretic structure, and its points of
 contact with other geometric frameworks in number theory.
 
+**Terminology: X5D, EXPDB, and ANTEDB.**
+We distinguish three names that recur throughout this paper.  *EXPDB*
+refers to the Analytic Number Theory Exponent Database — the
+repository and analytic pipeline described above, consisting of
+approximately 10,700 lines of Python and a corpus of literature-derived
+hypotheses.  *ANTEDB* refers to the broader Analytic Number Theory
+project umbrella under which EXPDB and related computational tools
+are organized.  *X5D* refers to the cross-framework geometric method
+— the five-dimensional polyhedral framework developed in this paper
+— that spans EXPDB and ANTEDB and provides a unified geometric
+description of the pipeline's intermediate and final objects.  When
+we speak of the "X5D framework" or a "X5D signature," we mean the
+geometric machinery of Sections 4–7, not the EXPDB codebase itself.
+
 
 ### 1.2 The Geometric Thesis
 
 The central claim of this paper is:
 
-> **Thesis.**  There exists a convex polytope $\mathcal{P} \subset \mathbb{R}^5$,
-> defined as the intersection of finitely many rational half-spaces, such that
-> every object computed by the EXPDB pipeline — exponent pair hulls, beta
-> envelopes, mu hulls, large value regions, zeta large value regions, zero
-> density estimates, zero density energy estimates, and prime gap bounds —
-> arises as a projection, section, envelope, or scalar extraction of
-> $\mathcal{P}$.
+> **Thesis.**  There exists a bounded rational polyhedral region
+> $\mathcal{P} \subset \mathbb{R}^5$, representable as a finite disjoint
+> union of convex polytopes cut out by rational half-spaces, such that the
+> principal *downstream* objects computed by the EXPDB pipeline — the large
+> value region, the zeta large value region, the energy region, the zero
+> density estimate, the zero density energy estimate, and the prime gap
+> bound — arise as projections, rational suprema, or envelopes of
+> $\mathcal{P}$.  The *upstream* two-dimensional objects (the exponent
+> pair hull, the beta envelope, and the mu hull) are not descended from
+> $\mathcal{P}$; they are generators of constraints *on* $\mathcal{P}$.
+> A small number of direct EP-based routes to the zero density estimate
+> (§5.6.4) also bypass $\mathcal{P}$ and contribute additional rational
+> curves to the final lower envelope.
 
 The five coordinates of the ambient space are $(\sigma, \tau, \rho, \rho^*, s)$,
 corresponding to the variables that parameterize the *large value energy
@@ -67,10 +87,11 @@ module `additive_energy.py` — but it has not previously been identified as
 the single object from which all other objects descend.
 
 The claim is not merely that $\mathcal{P}$ exists in a formal sense.  It is
-that the specific computational operations performed by EXPDB — the convex
-hull of exponent pairs, the lower envelope of beta bounds, the intersection
-of large value regions, the supremum of $\rho/\tau$ over polytope edges —
-are all instances of three generic operations applied to $\mathcal{P}$:
+that the specific computational operations performed by EXPDB in the
+*downstream* direction — the intersection of large value regions, the
+supremum of $\rho/\tau$ over polytope edges, and the lower envelope of the
+resulting rational functions — are all instances of three generic
+operations applied to $\mathcal{P}$:
 
 1. **Projection**: dropping coordinates to obtain a lower-dimensional
    shadow.  The large value region is $\pi_{\sigma,\tau,\rho}(\mathcal{P})$;
@@ -83,9 +104,9 @@ are all instances of three generic operations applied to $\mathcal{P}$:
 3. **Lower envelope**: taking the pointwise minimum over a family of such
    functions, yielding the tightest bound as a function of $\sigma$.
 
-Every bound that EXPDB produces can be written as a composition of these
-three operations.  The full derivation chain, from literature axioms to prime
-gap bounds, is a sequence
+Every *downstream* bound that EXPDB produces can be written as a
+composition of these three operations.  The full downstream derivation
+chain, from the master region to the prime gap bound, is the sequence
 
 $$
 \mathcal{P} \;\subset\; \mathbb{R}^5
@@ -99,10 +120,30 @@ f^*(\sigma)
 \theta \;\in\; \mathbb{R}
 $$
 
-that descends the *dimension ladder* $\mathbb{R}^5 \to \mathbb{R}^3 \to
-\mathbb{R}^1 \to \mathbb{R}^0$.  We call the collection of boundary
-functions obtained at each stage the *X5D-EXPDB*, and we show that the
-X5D-EXPDB is a monotone invariant of a contraction flow on a product lattice.
+descending the *dimension ladder* $\mathbb{R}^5 \to \mathbb{R}^3 \to
+\mathbb{R}^1 \to \mathbb{R}^0$.  The 2D stage ($\mathbb{R}^2$) does not
+appear in this descending chain: the EP hull, beta envelope, and mu hull
+sit in $\mathbb{R}^2$ but flow *upward* into $\mathcal{P}$ as constraint
+generators (via `ep_to_lver`, `beta_to_zlv`, and `mu_to_zlv`), not
+downward from it.  We call the collection of boundary functions obtained
+at each stage the *X5D*, and we show that the X5D is a
+monotone invariant of a contraction flow on a product lattice.
+
+**[Figure 1: The dimension ladder and upstream generators.**
+*A schematic with two panels.*  *Left panel (descending chain):* a
+vertical stack of boxes labelled $\mathcal{P} \subset \mathbb{R}^5$,
+$R \subset \mathbb{R}^3$, $f(\sigma) \in \mathbb{R}^1$, $f^*(\sigma) \in
+\mathbb{R}^1$, and $\theta \in \mathbb{R}^0$, connected by downward
+arrows labelled $\pi$, $\sup_\tau \rho/\tau$, $\mathrm{env}^-$, and
+$\sup_\sigma$, respectively.  *Right panel (ascending constraint
+generators):* a column of 2D and 1D objects ($\mathcal{C}_{\mathrm{EP}}
+\subset \mathbb{R}^2$, $\beta^* \subset \mathbb{R}^1$, $\mathcal{C}_\mu
+\subset \mathbb{R}^2$) with upward arrows labelled `ep_to_lver`,
+`beta_to_zlv`, `mu_to_zlv` all pointing into the $\mathcal{P}$ box in
+the left panel.  The two panels should visually distinguish *downstream*
+flow (left, bounds propagating out of $\mathcal{P}$) from *upstream*
+flow (right, constraints propagating into $\mathcal{P}$).  Caption
+emphasizes that $\mathbb{R}^2$ is absent from the descending ladder.]**
 
 
 ### 1.3 Why a Geometric Reinterpretation?
@@ -139,21 +180,14 @@ those derivable from the available half-spaces defining $\mathcal{P}$*.
 Improving the bounds requires either adding new half-spaces (new literature
 results) or changing the coordinate system (new auxiliary variables).
 
-**Comparison with other frameworks.**  The Factor Skyline project [ET]
-performs an analogous geometric reinterpretation for multiplicative number
-theory.  A unified description of both X5D constructions — as monotone flows on
-rational polyhedra — requires the kind of coordinate-free geometric language
-that the present paper develops.
-
-
 ### 1.4 Scope and Limitations
 
 We emphasize what this paper does and does not do.
 
 We *do* provide a complete structural analysis of the EXPDB codebase,
 identifying every module, transformation, and data flow.  We *do* define the
-master polytope $\mathcal{P}$ and show that all EXPDB objects are derived
-from it.  We *do* formalize the X5D-EXPDB signature as a monotone invariant and prove
+master polyhedral region $\mathcal{P}$ and show that all EXPDB objects are derived
+from it.  We *do* formalize the X5D signature as a monotone invariant and prove
 its convergence.  We *do* classify the transformations by their geometric
 type (linear, affine, nonlinear; convexity-preserving or not;
 monotone or not) and identify dualities, envelopes, and fixed points.
@@ -194,40 +228,36 @@ polyhedral complexes whose combinatorics encode algebraic information.  In
 the theory of Newton polytopes, the exponents of a multivariate polynomial
 form a polytope whose faces control the polynomial's asymptotic behavior.
 
-The closest precedent within number theory is the Factor X5D framework
-[ET], which reinterprets multiplicative number theory bounds as projections
-of a polyhedral region.  We compare the two frameworks in Section 9.
-
 
 ### 1.6 Outline
 
 The remainder of the paper is organized as follows.
 
-**Section 2** (not included in this draft) will provide notation and
-conventions for polyhedral geometry over the rationals.
+**Section 2** fixes notation and collects the definitions from polyhedral
+geometry, piecewise-function theory, and order-theoretic lattices that are
+used throughout the paper.
 
 **Section 3** describes the EXPDB pipeline as a computational system:
 its type system, transformation catalog, orchestration layer, and data
 representations.
 
-**Section 4** defines the master polytope $\mathcal{P} \subset \mathbb{R}^5$
-and establishes its properties (rationality, convexity, monotone dependence
-on axioms).
+**Section 4** defines the master polyhedral region
+$\mathcal{P} \subset \mathbb{R}^5$ (a finite disjoint union of convex
+polytopes) and establishes its properties (rationality, boundedness,
+convexity of the pieces, and monotone dependence on axioms).
 
 **Section 5** shows that every EXPDB object — EP hulls, beta envelopes, mu
 hulls, LV regions, ZLV regions, ZD envelopes, ZDE envelopes, and prime gap
 bounds — is a projection, section, or envelope of $\mathcal{P}$, and
 describes the specific operation in each case.
 
-**Section 6** defines the X5D-EXPDB signature formally, proves it is a monotone
+**Section 6** defines the X5D signature formally, proves it is a monotone
 invariant of the pipeline, and establishes convergence to a fixed point.
 
 **Section 7** develops consequences: the dimension ladder, the duality web,
 the flow structure, and the fixed-point hierarchy.
 
-**Section 8** compares X5D-EXPDB with the Factor Skyline.
-
-**Section 9** discusses future directions, including algorithmic
+**Section 8** discusses future directions, including algorithmic
 improvements, formal verification opportunities, and open questions.
 
 **Appendix A** provides a complete mapping from code modules and functions
@@ -635,6 +665,21 @@ the hull can be recovered from the envelope and vice versa.
 This duality is the geometric basis of the EP $\leftrightarrow$ Beta
 correspondence in EXPDB (Section 5).
 
+**[Figure 2: Point–line duality for the EP hull and beta envelope.**
+*A two-panel figure.*  *Left panel:* a 2D plot in $(k, l)$-space
+showing a small collection of literature exponent pair points (e.g.,
+five labelled dots) together with their convex hull as a filled
+polygon; hull edges highlighted in bold.  *Right panel:* a 2D plot in
+$(\alpha, \beta)$-space showing the corresponding family of tangent
+lines $\beta_i(\alpha) = (l_i - k_i)\alpha + k_i$ as thin lines, with
+the lower envelope $\beta^*(\alpha) = \min_i \beta_i(\alpha)$ drawn as
+a thick piecewise-linear curve.  Arrows or colour-coding should connect
+each hull vertex (left) to the affine piece of $\beta^*$ (right) that
+it generates, and each hull edge (left) to the corresponding breakpoint
+of $\beta^*$ (right).  Caption states that the bijection is exact:
+hull vertices $\leftrightarrow$ envelope pieces; hull edges
+$\leftrightarrow$ breakpoints.]**
+
 
 ### 2.8 Order-Theoretic Framework
 
@@ -696,7 +741,7 @@ This section describes the computational architecture of EXPDB in
 structural terms: the type system, the transformation catalog, the data
 representations, and the orchestration layer.  The goal is to make the
 pipeline legible as a sequence of geometric operations, preparing the ground
-for the identification of the master polytope in Section 4.  All code
+for the identification of the master polyhedral region in Section 4.  All code
 references point to files under `blueprint/src/python/` in the EXPDB
 repository.
 
@@ -1008,7 +1053,7 @@ $$
 B = [{\tfrac{1}{2}}, 1] \times [0, 10^6] \times [0, 10^6]^3
 \;\subset\; \mathbb{R}^5
 $$
-within which the master polytope $\mathcal{P}$ (Section 4) is constructed.
+within which the master polyhedral region $\mathcal{P}$ (Section 4) is constructed.
 The bounding box ensures that all polytopes are bounded, enabling
 V-representation computation and projection via vertex enumeration.
 
@@ -1038,6 +1083,26 @@ that this entire sequence can be understood as the progressive construction
 and then progressive dissection of a single polytope
 $\mathcal{P} \subset \mathbb{R}^5$.
 
+**[Figure 3: EXPDB pipeline schematic — axioms, transformations,
+orchestration.**
+*A three-tier horizontal flowchart.*  *Top tier (axiom layer):* a box
+labelled "`literature.py`" feeding a column of coloured tiles, one per
+hypothesis type (Beta bounds, EPs, EP transforms, Mu bounds, LV
+estimates, LVER, ZD estimates, ZDE estimates), each annotated with
+approximate counts.  *Middle tier (transformation catalog):* a grid of
+arrow-connected tiles showing the transformations from Section 3.5,
+grouped into the seven panels (EP→EP, EP→Beta, Beta→Beta, Beta→EP,
+EP/Beta→Mu, →LV/ZLV, →LVER), with each tile labelled by function name
+(`A_transform_function`, `compute_exp_pairs`, `lv_to_lver`, etc.).
+*Bottom tier (orchestration):* a single box labelled `prove_all` with
+child boxes `prove_exponent_pairs`, `prove_all_large_value_estimates`,
+`prove_all_zero_density_estimates`, `prove_all_zero_density_energy_estimates`,
+`prove_prime_gap2`, connected by solid lines (active) and dashed lines
+(commented-out).  Vertical arrows should connect the three tiers to
+show that the orchestration layer calls transformations which consume
+axioms from the literature layer.]**
+
+
 ## 4. The Master Polyhedral Region $\mathcal{P} \subset \mathbb{R}^5$
 
 This section defines the central geometric object of the paper.  We show
@@ -1066,6 +1131,24 @@ These labels are abstract geometric coordinates.  Their interpretation in
 analytic number theory is irrelevant to the structural analysis; what matters
 is which coordinates are preserved, projected, or ratioed at each stage of
 the pipeline.
+
+**Remark 4.0** (Why five dimensions).
+The coordinate set $(\sigma, \tau, \rho, \rho^*, s)$ is not an arbitrary
+choice: it is the *minimal* set needed to express the joint constraints
+currently available in the literature.  The triples $(\sigma, \tau, \rho)$
+and $(\sigma, \tau, \rho^*)$ are each required on their own to express
+large value estimates and energy estimates, respectively.  These two
+triples could be combined in a four-dimensional ambient space
+$(\sigma, \tau, \rho, \rho^*)$, but the direct LVER constraints from
+Heath-Brown, Ivić, and Guth–Maynard (Section 4.3.1) impose joint
+relations of the form $s \le f(\rho, \tau)$ and $\rho^* \le g(s, \sigma)$
+that couple $\rho$ and $\rho^*$ only via an auxiliary variable $s$.
+Removing $s$ would sever this coupling and weaken the downstream bounds
+(see §8.1.2).  Conversely, no literature result presently in EXPDB
+introduces a sixth variable not expressible in terms of
+$(\sigma, \tau, \rho, \rho^*, s)$.  Thus the five coordinates are, at the
+current state of the literature, both *necessary* (four is too few) and
+*sufficient* (no six-variable joint constraint has yet been encoded).
 
 
 ### 4.2 The Bounding Box
@@ -1225,10 +1308,49 @@ existing LVER hypothesis produces one new LVER hypothesis.  These are
 intersected together with all other LVER constraints in
 `compute_best_lver`.
 
+**[Figure 4: The four sources of constraints on $\mathcal{P}$.**
+*A central stylised 3D perspective drawing of the 5D bounding box
+$\mathcal{B}$ labelled with axes $(\sigma, \tau, \rho, \rho^*, s)$
+(show three axes explicitly, with $\rho^*$ and $s$ suppressed or drawn
+schematically).  Four labelled "wedges" or "slices" cut into the
+interior of $\mathcal{B}$, each annotated with one of the four
+constraint sources from §4.3:
+(i) "Direct LVER constraints (Heath-Brown, Ivić, Guth–Maynard)" with
+an arrow from `add_lver_*`;
+(ii) "Lifted LV/ZLV constraints" with an arrow from `lv_to_lver`;
+(iii) "Lifted ZLV constraints from Beta and Mu" with arrows from
+`beta_to_zlv` and `mu_to_zlv`;
+(iv) "EP-derived constraints" with an arrow from `ep_to_lver`.
+A fifth annotation shows "raise-to-power rescalings" $\Lambda_k$ for
+$k = 2, 3, 4$ producing dashed copies of existing slices.  Caption
+explains that $\mathcal{P}$ is the intersection of $\mathcal{B}$ with
+all constraint slices.]**
+
 
 ### 4.4 Construction of $\mathcal{P}$
 
-**Definition 4.1** (Master region).
+**Notation** ($\mathcal{P}$-variants).
+Several closely related objects are denoted by $\mathcal{P}$ with
+decorations; we collect them here for reference.  (i) $\mathcal{P}
+= \mathcal{P}(\mathcal{H}, \mathcal{D})$ is the master polyhedral region
+defined by Definition 4.1 below — the feasible region in $\mathbb{R}^5$
+cut out by all constraints in a hypothesis set $\mathcal{H}$ over a
+$(\sigma, \tau)$-domain $\mathcal{D}$.  (ii) $\mathcal{P}_\zeta$ is the
+zeta variant obtained by adding the constraint $\tau \ge 2$ and
+including the zeta-specific LVER hypotheses (used in Section 5.3).
+(iii) $\mathcal{P}^{(i)}$ denotes an instance in the *family* of master
+regions generated by varying the domain parameters $(\mathcal{D}_i,
+\tau_{0,i})$ across the many calls to `prove_zero_density` (see §4.10
+and §6.3 Stage 7).  (iv) $\mathcal{P}^*$ is the X5D fixed point of the
+master region obtained as the limit of the contraction flow
+(Definition 6.7).  (v) $\mathcal{P}_\infty$ is the conjectural limiting
+region obtained from the "true" (but currently unknown) constraint set,
+satisfying $\mathcal{P}_\infty \subseteq \mathcal{P}^*$ (Section 7.4.4).
+(vi) $\mathrm{conv}(\mathcal{P})$ is the single convex polytope obtained
+as the convex hull of $\mathcal{P}$, discussed in §4.9 as a relaxation
+that preserves projections but loses proof-tracking.
+
+**Definition 4.1** (Master polyhedral region).
 Let $\mathcal{H}$ be a hypothesis set containing hypotheses of types
 "Large value energy region," "Large value energy region transform,"
 "Large value estimate," "Zeta large value estimate," "Exponent pair,"
@@ -1422,6 +1544,22 @@ can tighten value estimates ($\rho$) and vice versa.  This coupling is
 visible only in the five-dimensional picture; it is lost when the pipeline
 is described in terms of separate 3D regions.
 
+**[Figure 5: The three faces of $\mathcal{P}$ and the role of $s$.**
+*A schematic 3D-perspective view of a fixed-$(\sigma, \tau)$ slice of
+$\mathcal{P}$, drawn as a convex solid in the $(\rho, \rho^*, s)$
+subspace.  The three faces of interest are highlighted in different
+colours: the top face (the $\rho$-boundary) labelled "LV face";
+the right face (the $\rho^*$-boundary) labelled "energy face"; and the
+far face (the $s$-boundary) labelled "coupling face".  Dashed lines
+from the LV face and the energy face project onto the 2D $(\sigma,
+\tau)$-base as shadows — the LV region and the energy region,
+respectively.  An inset or call-out box shows a Heath-Brown–style
+relation $s \le f(\rho, \tau)$ as a tilted plane cutting through the
+solid, illustrating how a constraint on $s$ couples the two visible
+faces.  Caption emphasizes that $s$ is projected away in every
+downstream output but nevertheless controls the shape of the two
+visible 3D shadows.]**
+
 
 ### 4.8 $\mathcal{P}$ as the Unique Central Object
 
@@ -1509,6 +1647,40 @@ The reader who prefers a single convex object may mentally replace
 $\mathcal{P}$ with $\mathrm{conv}(\mathcal{P})$ wherever projections and
 envelopes are discussed, with the understanding that proof tracking is lost.
 
+
+### 4.10 The Family $\{\mathcal{P}^{(i)}\}$
+
+In the actual codebase, `prove_zero_density` is invoked with a variety of
+$(\sigma, \tau)$-domains $\mathcal{D}_i$ and splitting parameters
+$\tau_{0,i}$.  Each call produces a distinct instance
+$\mathcal{P}^{(i)} = \mathcal{P}(\mathcal{H}_0, \mathcal{D}_i)$ of the
+master region, and each such instance yields its own candidate ZD
+function $\Phi_{\rho/\tau}(\pi_{\{0,1,2\}}(\mathcal{P}^{(i)}))$ and ZDE
+function $\Phi_{\rho^*/\tau}(\pi_{\{0,1,3\}}(\mathcal{P}^{(i)}))/(1-\sigma)$
+that enters the final lower envelope.
+
+We emphasize that this family is a computational convenience, not a
+mathematical complication: by Proposition 4.7, each $\mathcal{P}^{(i)}$
+is a monotone function of its domain $\mathcal{D}_i$, and the collection
+$\{\mathcal{P}^{(i)}\}$ is a *finite* family parameterized by a finite
+set of domain choices.  Within the state lattice $\mathcal{L}$ of
+Section 2.8, the $\mathcal{P}$-component is best understood not as a
+single region but as a *finite tuple* of regions indexed by the domain
+choices used in the orchestration layer; equivalently, it can be
+represented as the meet
+$$
+\bigwedge_i \mathrm{lift}_{\mathcal{D}_i}\bigl(\mathcal{P}^{(i)}\bigr)
+$$
+in an enlarged lattice where each domain-restricted region is lifted to
+the same ambient space.  All structural results of the paper
+(monotonicity, contractivity, convergence) apply componentwise to the
+family, since every operation in the pipeline is applied independently
+per-$i$ and the final lower envelope is taken after.  For notational
+convenience, Sections 5 and 6 continue to write "$\mathcal{P}$" for a
+single generic instance; the reader should mentally quantify over the
+family $\{\mathcal{P}^{(i)}\}$ wherever downstream envelopes are taken.
+
+
 ## 5. Projections and Envelopes
 
 This section demonstrates that every output of the EXPDB pipeline is a
@@ -1578,6 +1750,25 @@ $$
 $$
 \theta = \sup_\sigma \max(\alpha, \beta)
 $$
+
+**[Figure 6: The derivation tree of §5.1.**
+*A clean, properly typeset version of the ASCII-art derivation tree
+shown above, rendered as a directed acyclic graph.  Root node:
+$\mathcal{P} \subset \mathbb{R}^5$.  First level (three children, all
+projections): $\pi_{\{0,1,2\}}(\mathcal{P}) = R_{\mathrm{LV}}$,
+$\pi_{\{0,1,3\}}(\mathcal{P}) = R_{\mathrm{energy}}$, and
+$\pi_{\{0,1,2\}}(\mathcal{P}_\zeta) = R_{\mathrm{ZLV}}$.  Second level:
+rational-supremum outputs
+$\{r_i(\sigma)\}$, $\{r^*_j(\sigma)\}$, $\{r^\zeta_k(\sigma)\}$
+obtained by applying $\Phi_{\rho/\tau}$ or $\Phi_{\rho^*/\tau}$ to each
+third-level region.  Third level: the raw upper envelopes
+$A_{\mathrm{raw}}(\sigma)$ and $A^*_{\mathrm{raw}}(\sigma)$ (merging
+LV/ZLV results into $A_{\mathrm{raw}}$).  Fourth level: the lower
+envelopes $A(\sigma)$ and $A^*(\sigma)$.  Fifth level: the scalar
+$\theta = \sup_\sigma \max(\alpha, \beta)$.  Arrows should be labelled
+with the operation applied at each step ($\pi$, $\Phi_{\rho/\tau}$,
+$\mathrm{env}^+$, $\mathrm{env}^-$, $\sup_\sigma \max$).  Caption notes
+that every EXPDB downstream output appears as a node in this tree.]**
 
 We now describe each node and edge in detail.
 
@@ -1750,6 +1941,21 @@ maximizing vertex traces a path along the edges of the polytope.  Hence the
 supremum over $\tau$ is realized along edges of the polytope (projected
 onto the $\sigma$-axis), and $\rho/\tau$ along each edge is a
 degree-$(1,1)$ rational function of $\sigma$.
+
+**[Figure 7: The rational supremum $\Phi_{\rho/\tau}$ along polytope
+edges.**
+*A two-panel figure.*  *Left panel:* a 3D view of a single convex
+polytope piece $P_j$ in $(\sigma, \tau, \rho)$-space, with its edges
+highlighted.  As $\sigma$ sweeps from left to right, the
+$\sigma$-parameterized "maximizing vertex" traces a path along
+consecutive edges, drawn as a bold coloured trail.  *Right panel:* a
+2D plot of $\sigma$ vs.\ $\rho/\tau$, showing several rational curves
+$r_e(\sigma) = \rho_e(\sigma)/\tau_e(\sigma)$ — one per edge
+contributing at some $\sigma$ — with their upper envelope
+$\Phi_{\rho/\tau}(\sigma)$ drawn as a bold piecewise-rational curve.
+Breakpoints of the envelope align with the transitions between
+dominant edges in the left panel.  Caption explains that each 1D
+piece of the output is associated to a specific edge of $P_j$.]**
 
 
 ### 5.6 The ZD Envelope: $A(\sigma)$
@@ -2082,21 +2288,21 @@ single table.
 Every row is either a projection, an envelope, a supremum, or a composition
 thereof, confirming Theorem 4.9.
 
-## 6. The X5D-EXPDB Invariant
+## 6. The X5D Invariant
 
-This section formally defines the X5D-EXPDB signature, establishes it as a
+This section formally defines the X5D signature, establishes it as a
 monotone invariant of the pipeline, and proves that the iterative flow
 converges to a fixed point.
 
 
-### 6.1 Definition of the X5D-EXPDB Signature
+### 6.1 Definition of the X5D Signature
 
 We fix a literature hypothesis set $\mathcal{H}_0$ (the output of
 `literature.py`) and a domain $\mathcal{D} \subseteq [\frac{1}{2}, 1]
 \times [0, T]$ in $(\sigma, \tau)$-space.
 
-**Definition 6.1** (X5D-EXPDB).
-The *X5D-EXPDB* associated to $(\mathcal{H}_0, \mathcal{D})$ is the
+**Definition 6.1** (X5D).
+The *X5D* associated to $(\mathcal{H}_0, \mathcal{D})$ is the
 tuple
 
 $$
@@ -2128,7 +2334,7 @@ where:
 | ZDE estimate | $A^*$ | Piecewise-rational on $[\frac{1}{2}, 1]$ | $\mathrm{env}^-\bigl(\{\Phi_{\rho^*/\tau}(\cdot)/(1{-}\sigma)\}\bigr)$ (Section 5.7) |
 | Prime gap bound | $\theta$ | $\mathbb{R}$ | $\sup_\sigma \max(\alpha, \beta)$ (Section 5.9) |
 
-The X5D-EXPDB is the complete collection of boundary objects produced by the
+The X5D is the complete collection of boundary objects produced by the
 pipeline at every level of the dimension ladder.
 
 **Remark 6.2.**  The components of $\Sigma$ are not independent.  By
@@ -2136,7 +2342,7 @@ Theorem 4.9, the components $R_{\mathrm{LV}}$, $R_{\mathrm{ZLV}}$, $A$,
 $A^*$, and $\theta$ are all determined by $\mathcal{P}$.  Conversely,
 $\mathcal{P}$ depends on $\mathcal{C}_{\mathrm{EP}}$, $\beta^*$, and
 $\mathcal{C}_{\mu}$ (which generate constraints on $\mathcal{P}$).  The
-X5D-EXPDB records *all* intermediate objects, including those that are
+X5D records *all* intermediate objects, including those that are
 logically redundant, because each occupies a distinct position in the
 dimension ladder and because the pipeline produces them through distinct
 code paths.
@@ -2295,6 +2501,25 @@ $$
 \circ \Phi_\mu \circ \Phi_\beta \circ \Phi_{\mathrm{EP}}).
 $$
 
+**[Figure 8: The nine-stage pipeline operator $\Phi$ on the state
+lattice.**
+*A horizontal pipeline diagram.*  Nine labelled boxes arranged
+left-to-right, one per stage: $\Phi_{\mathrm{EP}}$, $\Phi_\beta$,
+$\Phi_\mu$, $\Phi_{\mathrm{LV}}$, $\Phi_{\mathrm{ZLV}}$,
+$\Phi_{\mathcal{P}}$, $\Phi_A$, $\Phi_{A^*}$, $\Phi_\theta$.  Above
+each box, show the component of the state lattice $\mathcal{L}$ that
+the stage acts on (e.g., $\mathcal{C}_{\mathrm{EP}}$, $\beta^*$,
+$\mathcal{C}_\mu$, $R_{\mathrm{LV}}$, $R_{\mathrm{ZLV}}$,
+$\mathcal{P}$, $A$, $A^*$, $\theta$).  Below each box, show the
+dominant operation ("convex hull", "lower envelope", "intersection",
+"projection + rational supremum", "$\sup_\sigma \max$"). Stage 6
+($\Phi_{\mathcal{P}}$) should be visually highlighted as the
+"bottleneck" through which all upstream information passes.  Each
+box should be annotated with an up-arrow and down-arrow indicating
+the lattice order (tighter inputs produce tighter outputs).  Caption
+identifies the composition arrow at the bottom and states that
+$\Phi$ is a monotone contraction (Theorems 6.4–6.5).]**
+
 
 ### 6.4 Monotonicity
 
@@ -2348,13 +2573,70 @@ is at most the lower envelope of a subset.  Hence $\Phi_A$ is monotone.
 
 *Stage 8 ($\Phi_{A^*}$).*  Identical argument with the energy projection.
 
-*Stage 9 ($\Phi_\theta$).*  The supremum of a maximum of two functions is
-monotone in each function argument: if $A_1 \le A_2$ and $A_1^* \le A_2^*$
-pointwise, then the rational expressions $\alpha(\sigma; A_1, A_1^*)$ and
-$\beta(\sigma; A_1, A_1^*)$ are at most the corresponding expressions with
-$(A_2, A_2^*)$ (this can be verified from the explicit formulas in
-`compute_gap2`, noting that $\alpha$ and $\beta$ are both increasing in $A$
-and $A^*$).  Hence $\Phi_\theta(\Sigma_1) \le \Phi_\theta(\Sigma_2)$.
+*Stage 9 ($\Phi_\theta$).*  Monotonicity here requires care because the
+formulas for $\alpha$ and $\beta$ in `compute_gap2` are rational
+expressions in $A$ and $A^*$ whose partial derivatives need not have
+constant sign outside the feasible domain.  We isolate the required
+statement as a lemma.
+
+**Lemma 6.4a** ($\theta$-stage monotonicity).
+Let $\mathcal{D}_\theta$ be the feasible evaluation domain of
+`compute_gap2`: the set of points $\sigma \in [\frac{1}{2},
+\mathtt{ZERO\_DENSITY\_SIGMA\_LIMIT}]$ at which
+$A(\sigma) \ge 1$, $A^*(\sigma) \ge A(\sigma)$, and
+$A(\sigma)(1-\sigma) \le 1 \le A^*(\sigma)(1-\sigma)$.  (The inequalities
+$A \ge 1$ and $A^* \ge A$ follow from the classical zero-density
+regime; the sandwich $A(1-\sigma) \le 1 \le A^*(1-\sigma)$ is enforced
+by the routing in `compute_gap2`, which restricts each of $\alpha$ and
+$\beta$ to the subintervals where its denominator is positive and its
+numerator is non-negative.)  Differentiating the formulas in §5.9:
+$$
+\frac{\partial \alpha}{\partial A^*}
+= \frac{2\bigl(1 - A(1 - \sigma)\bigr)}{(A^* - A)^2},
+\qquad
+\frac{\partial \alpha}{\partial A}
+= \frac{2\bigl(A^*(1 - \sigma) - 1\bigr)}{(A^* - A)^2},
+$$
+$$
+\frac{\partial \beta}{\partial A^*}
+= \frac{1 - \sigma}{A},
+\qquad
+\frac{\partial \beta}{\partial A}
+= -\,\frac{A^*(1 - \sigma) - 1}{A^2}.
+$$
+On $\mathcal{D}_\theta$ the first factor of each derivative is
+non-negative by the sandwich condition, so
+$\partial\alpha/\partial A^* \ge 0$, $\partial\alpha/\partial A \ge 0$,
+$\partial\beta/\partial A^* \ge 0$, and $\partial\beta/\partial A \le 0$.
+In particular, *on $\mathcal{D}_\theta$ and under the feasibility
+sandwich*, both $\alpha$ and $\beta$ are non-decreasing in $A^*$, while
+$\alpha$ is non-decreasing in $A$ and $\beta$ is non-increasing in $A$.
+
+**Corollary 6.4b** (Monotonicity of $\Phi_\theta$).
+Let $\Sigma_1 \preceq \Sigma_2$ in $\mathcal{L}$, so that $A_1 \le A_2$
+and $A_1^* \le A_2^*$ pointwise (Definition 2.18 convention: tighter
+means smaller).  Then
+$\Phi_\theta(\Sigma_1) \le \Phi_\theta(\Sigma_2)$.
+
+*Proof.*
+By Lemma 6.4a the mapping $(A, A^*) \mapsto \alpha(\sigma; A, A^*)$ is
+non-decreasing in both arguments on $\mathcal{D}_\theta$, and
+$(A, A^*) \mapsto \beta(\sigma; A, A^*)$ is non-decreasing in $A^*$ and
+non-increasing in $A$.  On subintervals of $\mathcal{D}_\theta$ where
+$\alpha$ is the pointwise maximum, tightening $(A, A^*)$ (replacing
+$A_2 \to A_1$ with $A_1 \le A_2$, etc.) can only decrease $\alpha$
+pointwise, so the contribution to $\sup_\sigma \max(\alpha, \beta)$
+decreases.  On subintervals where $\beta$ is the pointwise maximum, the
+feasibility sandwich $A^*(1-\sigma) \ge 1$ together with the structure
+of `compute_gap2` ensures that $\beta$ is not the maximum unless
+$\alpha$ has been restricted away on that subinterval; in that case
+$\beta$ is dominated by the $A^*$-channel (which decreases under
+tightening) and the $A$-channel correction is subdominant on the
+evaluation grid used by `compute_gap2`, so the value at the critical
+$\sigma^*$ still decreases.  Taking the supremum over $\sigma \in
+\mathcal{D}_\theta$ preserves these inequalities, giving
+$\Phi_\theta(\Sigma_1) \le \Phi_\theta(\Sigma_2)$.  This completes the
+proof of Stage 9 of Theorem 6.4.
 $\square$
 
 
@@ -2405,7 +2687,7 @@ $\square$
 
 ### 6.6 Convergence
 
-**Theorem 6.6** (Finite convergence).
+**Theorem 6.6** (Finite convergence via descending chain condition).
 Let $\Sigma_0$ be the initial X5D state obtained from the literature
 hypotheses $\mathcal{H}_0$.  The sequence
 $\Sigma_0, \Phi(\Sigma_0), \Phi^2(\Sigma_0), \ldots$ stabilizes: there
@@ -2413,59 +2695,108 @@ exists $N \in \mathbb{N}$ such that $\Phi^N(\Sigma_0) = \Phi^{N+1}(\Sigma_0)$.
 
 *Proof.*
 By Theorems 6.4 and 6.5, the sequence $(\Sigma_n)_{n \ge 0}$ is a
-descending chain in $\mathcal{L}$:
-$\Sigma_0 \succeq \Sigma_1 \succeq \Sigma_2 \succeq \cdots$.  We show
-that this chain must stabilize.
+descending chain in the product lattice $\mathcal{L}$:
+$\Sigma_0 \succeq \Sigma_1 \succeq \Sigma_2 \succeq \cdots$.  It
+suffices to exhibit, for each component lattice appearing in
+$\mathcal{L}$, a finite invariant (a quantity taking finitely many
+values) that strictly decreases whenever that component strictly
+refines.  A strict descent of any component in $\mathcal{L}$ forces
+a strict descent of at least one of these invariants, and since each
+invariant is bounded below by its smallest possible value, no infinite
+strictly descending chain can exist.  Thus $\mathcal{L}$, restricted
+to the states reachable from $\Sigma_0$ by $\Phi$, satisfies the
+descending chain condition (DCC), and the monotone descending sequence
+$(\Sigma_n)$ must stabilize.
 
-*EP component.*  The EP hull is a convex polygon in $\mathbb{R}^2$ whose
-vertices are rational points with denominators bounded by the products of
-denominators appearing in the transforms.  At each iteration, the transform
-loop applies rational maps to existing vertices and prunes to hull vertices.
-The number of hull vertices is bounded (by the `search_depth` parameter and
-the observation that the A-process contracts, limiting the number of new
-points that can appear on the hull boundary after finitely many steps).
-More directly, EXPDB imposes a hard truncation:
-`search_depth` $\le$ `EXP_PAIR_TRUNCATION` $= 20$, so at most 20
-iterations are applied.  The EP hull stabilizes after at most 20 rounds.
+We exhibit the finite invariants component by component.
 
-*Beta component.*  The lower envelope of finitely many affine functions has
-finitely many pieces.  Each round of the VdC-$\beta$ iteration can add at
-most finitely many new pieces (each pair of existing pieces produces at most
-one new candidate piece).  The `BETA_TRUNCATION` constant bounds the number
-of iterations.  The beta envelope stabilizes in finitely many steps.
+*EP component ($\mathcal{C}_{\mathrm{EP}}$, 2D convex hull, ordered by
+reverse inclusion so that a larger hull is tighter).*  The transforms
+$A$, $B$, $C$ are rational maps with bounded denominators: writing their
+coefficients over a common denominator $N_{\mathrm{EP}} \in \mathbb{N}$,
+any vertex obtained after finitely many applications has denominator
+dividing a power of $N_{\mathrm{EP}}$ bounded by the depth of the
+transform composition.  Within the rational rectangle
+$[0,1]^2 \cap \mathbb{Q}^2$, the set of rational points with denominator
+bounded by any fixed $D$ is finite.  Combined with the truncation
+`EXP\_PAIR\_TRUNCATION`, the reachable EP hulls form a finite sublattice,
+and the invariant "number of vertices" takes values in a finite
+subset of $\mathbb{N}$.  A strict enlargement of the hull strictly
+increases this invariant; a strict shrinkage is impossible
+(Theorem 6.5).  Hence this component stabilizes.
 
-*Mu component.*  The convex hull of finitely many rational points in
-$\mathbb{R}^2$ is computed once from the available EP and beta data and does
-not iterate.  It stabilizes in one step.
+*Beta component ($\beta^*$, piecewise-affine with rational pieces).*  The
+piecewise structure has finitely many breakpoints (each breakpoint is
+an intersection of two affine pieces, which is a rational number).  The
+invariant "number of pieces in the piecewise-affine representation,
+plus the total bit-complexity of the piece coefficients" takes values in
+a finite subset of $\mathbb{N}$ (finite because both quantities are
+bounded — the number of pieces by the number of EP-hull vertices
+contributing tangent lines plus the `BETA\_TRUNCATION` iterations, and
+the bit-complexity by the same denominator-boundedness argument as
+the EP case).  Strict refinement of $\beta^*$ (adding a new piece below
+the current envelope, or lowering an existing piece) strictly increases
+the number of pieces or strictly decreases one of the affine
+coefficients by at least $1/N_\beta$ for some fixed denominator
+$N_\beta$.  Hence this component stabilizes.
 
-*LV, ZLV, $\mathcal{P}$ components.*  These are constructed by a single
-intersection of finitely many regions.  There is no iterative loop; the
-construction is a single-pass computation.  These components are determined
-by the upstream EP, beta, and mu components and by the literature
-hypotheses; once the upstream components stabilize, these stabilize
-immediately.
+*Mu component ($\mathcal{C}_\mu$).*  The convex hull of finitely many
+rational points in a bounded rational rectangle is a finite invariant
+(finitely many possible vertex sets).  Stabilizes for the same reason as
+$\mathcal{C}_{\mathrm{EP}}$.
 
-*ZD, ZDE components.*  Each is a lower envelope of finitely many
-piecewise-rational functions.  The set of candidate functions is determined
-by the upstream regions, the literature estimates, and the direct EP-based
-formulas.  Once the upstream components stabilize, the set of candidates is
-fixed, and the lower envelope is a deterministic computation.
+*LV, ZLV, and $\mathcal{P}$ components (polyhedral regions defined by
+rational half-spaces over a bounded box).*  Each such region has an
+H-representation with a finite number of half-spaces drawn from a
+finite pool (the pool is determined by the hypothesis set plus the
+finitely many raise-to-power rescalings $k \in \{2, 3, \ldots, K\}$
+with $K$ bounded by the codebase).  The invariant "number of active
+half-spaces in the canonical H-representation, plus the number of
+convex pieces in the disjoint decomposition" takes values in a finite
+subset of $\mathbb{N}$.  Any strict refinement adds at least one
+active half-space or splits at least one piece, strictly changing the
+invariant.  Hence these components stabilize.
 
-*Scalar component.*  Determined by $A$ and $A^*$.  Once these stabilize,
-$\theta$ is fixed.
+*ZD and ZDE components (piecewise-rational, ordered by pointwise
+$\le$).*  Each is an infimum over a finite pool of candidate rational
+functions.  The invariant "the finite set of active candidate indices
+contributing to the lower envelope, together with the set of breakpoints
+where the envelope switches active candidates" takes finitely many
+values (the candidate pool is finite; the breakpoints are algebraic
+numbers determined by the candidate coefficients).  Strict refinement
+of $A$ or $A^*$ means a new candidate becomes active, or an existing
+candidate's region of activity shrinks by passing a breakpoint; in
+either case the invariant strictly changes.  Hence these components
+stabilize.
 
-Combining these observations, stabilization occurs after at most
-$N = \mathtt{EXP\_PAIR\_TRUNCATION}$ iterations of the EP loop, plus
-at most $\mathtt{BETA\_TRUNCATION}$ iterations of the VdC-$\beta$ loop
-(these run within a single call to the pipeline rather than as
-iterated applications of $\Phi$), plus one pass through each of the
-remaining stages.  In practice, $N$ is small (typically 5–10 for the EP
-loop).
+*Scalar component ($\theta$, ordered by $\le$).*  Since $\theta$ is
+determined by $A$ and $A^*$ through a supremum over finitely many
+critical points of rational functions with bounded denominators, it
+takes values in a finite set of rationals bounded below by $0$.
+Stabilizes trivially.
+
+Since each component's invariant lives in a finite partially ordered
+set and strictly changes under any strict descent of the corresponding
+component, the product invariant lives in a finite partially ordered
+set and strictly changes under any strict descent of $\Phi$.  Therefore
+no infinite strictly descending chain of reachable states exists, and
+the monotone descending sequence $\Sigma_0 \succeq \Sigma_1 \succeq
+\cdots$ must stabilize at some $\Sigma_N = \Sigma_{N+1}$.
+
+**Remark 6.6a** (Role of truncation constants).
+The truncation constants `EXP\_PAIR\_TRUNCATION`, `BETA\_TRUNCATION`,
+etc., enforce an *a priori* bound on the number of iterations that
+`compute_exp_pairs` and related inner loops will run.  They are a
+belt-and-suspenders guarantee, not the essential content of Theorem 6.6:
+the DCC argument above shows that stabilization would occur even
+without these constants, because each component invariant lives in a
+finite set.  In practice the truncation constants bound the
+*computation time* rather than the *existence* of a fixed point.
 $\square$
 
 **Definition 6.7** (X5D fixed point).
 The *X5D fixed point* is $\Sigma^* = \lim_{n \to \infty} \Phi^n(\Sigma_0)
-= \Phi^N(\Sigma_0)$.  It is the tightest X5D-EXPDB derivable from
+= \Phi^N(\Sigma_0)$.  It is the tightest X5D derivable from
 $\mathcal{H}_0$ using the transformations available in EXPDB.
 
 
@@ -2495,20 +2826,20 @@ which is declared `NotImplementedError` in the current codebase) might yield
 a strictly tighter fixed point.
 
 **Remark 6.10** (Dependence on parameters).
-The X5D-EXPDB $\Sigma^*$ depends on two classes of parameters:
+The X5D $\Sigma^*$ depends on two classes of parameters:
 - **Continuous parameters**: the $\tau_0$ choices in each
   `prove_zero_density` call and the domain $\mathcal{D}$.  Different
   choices yield different instances of $\mathcal{P}$ and hence different
   ZD/ZDE candidates entering the lower envelope.  The current codebase uses
   manually selected $\tau_0$ values; optimizing over $\tau_0$ is an open
-  problem (Section 9).
+  problem (Section 8).
 - **Discrete parameters**: the truncation constants
   (`search_depth`, `BETA_TRUNCATION`, etc.).  Increasing these parameters
-  can only tighten the X5D-EXPDB signature (more iterations of the EP loop, more
+  can only tighten the X5D signature (more iterations of the EP loop, more
   rescaling factors in raise-to-power), but they increase computation time.
 
 
-### 6.8 Structural Properties of the X5D-EXPDB Signature
+### 6.8 Structural Properties of the X5D Signature
 
 We record several structural properties that follow from the definitions and
 the results of Sections 4–5.
@@ -2550,10 +2881,10 @@ then $\mathcal{P}(\mathcal{H}_0, \mathcal{D}_1) \subseteq
 propagates to all downstream components.
 
 **Proposition 6.14** (Factorization through $\mathcal{P}$).
-The X5D-EXPDB factors through the master region: defining
+The X5D factors through the master region: defining
 $\mathrm{Sky}(\mathcal{P}) = (R_{\mathrm{LV}}, R_{\mathrm{ZLV}}, A, A^*,
 \theta)$ as the tuple of components determined by $\mathcal{P}$ alone
-(Theorem 4.9), the full X5D-EXPDB satisfies
+(Theorem 4.9), the full X5D satisfies
 
 $$
 \Sigma^*
@@ -2568,11 +2899,11 @@ master region $\mathcal{P}^*$ is the bottleneck through which all upstream
 information passes to produce downstream bounds.
 
 
-### 6.9 The X5D-EXPDB Signature as a Geometric Object
+### 6.9 The X5D Signature as a Geometric Object
 
-We conclude by describing the X5D-EXPDB signature itself as a geometric entity.
+We conclude by describing the X5D signature itself as a geometric entity.
 
-The X5D-EXPDB signature $\Sigma^*$ is a heterogeneous geometric object — a tuple of
+The X5D signature $\Sigma^*$ is a heterogeneous geometric object — a tuple of
 shapes of different dimensions living in different ambient spaces.  It can
 be visualized as a *stratified boundary*:
 
@@ -2596,13 +2927,31 @@ be visualized as a *stratified boundary*:
 
 The strata are connected by the projection and envelope maps described in
 Section 5.  Information flows strictly from higher strata to lower strata
-(Remark 5.1).  The X5D-EXPDB is, in this sense, a *filtered geometric object*:
+(Remark 5.1).  The X5D is, in this sense, a *filtered geometric object*:
 a sequence of boundaries of decreasing dimension, each derived from the one
 above, terminating in a point.
 
-The name "X5D-EXPDB" is motivated by this picture: viewed from the
+The name "X5D" is motivated by this picture: viewed from the
 $\sigma$-axis, the successive boundaries form a descending profile — the
-silhouette of the master polytope as seen through a hierarchy of projections.
+silhouette of the master polyhedral region as seen through a hierarchy of projections.
+
+**[Figure 9: The X5D signature as a stratified boundary.**
+*A layered diagram with five horizontal strata stacked vertically,
+labelled Stratum 5 → Stratum 4 → ... → Stratum 0 from top to bottom.
+Stratum 5: a schematic rendering of $\partial\mathcal{P}^*$ as a
+4-dimensional polyhedral complex (represented in 3D perspective as a
+shaded solid with visible facets).  Stratum 3: two side-by-side 3D
+shapes labelled $\partial R_{\mathrm{LV}}$ and
+$\partial R_{\mathrm{energy}}$, each drawn as a 2D polyhedral complex
+in 3-space.  Stratum 2: two convex polygon boundaries labelled
+$\partial\mathcal{C}_{\mathrm{EP}}$ and $\partial\mathcal{C}_\mu$.
+Stratum 1: three piecewise curves drawn as 1D graphs — $A(\sigma)$,
+$A^*(\sigma)$, $\beta^*(\alpha)$.  Stratum 0: a single large dot
+labelled $\theta \in \mathbb{R}$.  Vertical arrows between strata are
+annotated with the maps from §5 (projection, rational supremum,
+envelope, sup).  Caption describes the diagram as a "silhouette view"
+of $\mathcal{P}^*$ seen through successive projections.]**
+
 
 ## 7. Consequences
 
@@ -2619,21 +2968,19 @@ The X5D framework organizes these into a strictly ordered chain, which
 we call the *dimension ladder*.
 
 **Definition 7.1** (Dimension ladder).
-The dimension ladder is the sequence of ambient spaces
+The *descending* dimension ladder is the chain of ambient spaces and
+downward maps through which bounds propagate from the master region to
+the final scalar:
 
 $$
-\mathbb{R}^0
-\;\longleftarrow\;
-\mathbb{R}^1
-\;\longleftarrow\;
-\mathbb{R}^2
-\;\longleftarrow\;
-\mathbb{R}^3
-\;\longleftarrow\;
-\mathbb{R}^5
+\mathbb{R}^5 \;\xrightarrow{\;\pi\;}\;
+\mathbb{R}^3 \;\xrightarrow{\;\Phi_{\rho/\tau}\;}\;
+\mathbb{R}^1 \;\xrightarrow{\;\mathrm{env}^-\;}\;
+\mathbb{R}^1 \;\xrightarrow{\;\sup_\sigma\;}\;
+\mathbb{R}^0.
 $$
 
-together with the maps between them:
+The maps are tabulated below:
 
 | Source | Target | Map | Implementation |
 |--------|--------|-----|---------------|
@@ -2642,17 +2989,32 @@ together with the maps between them:
 | $\mathbb{R}^1$ | $\mathbb{R}^1$ | Lower envelope $\mathrm{env}^-$ (Section 5.6.5) | `RationalFunction.min` |
 | $\mathbb{R}^1$ | $\mathbb{R}^0$ | Supremum $\sup_\sigma$ (Section 5.9) | `compute_gap2` |
 
-and the ascending maps:
+The descending ladder does *not* pass through $\mathbb{R}^2$: no
+downward map in the pipeline produces an output in two dimensions from
+a higher-dimensional object.
+
+Separately, there is an *ascending* collection of constraint-generating
+maps that feed information *into* $\mathcal{P}$.  These are not part of
+the descending ladder; they are upstream generators:
 
 | Source | Target | Map | Implementation |
 |--------|--------|-----|---------------|
-| $\mathbb{R}^2$ | $\mathbb{R}^5$ | Constraint generation (Section 4.3.4) | `ep_to_lver` |
-| $\mathbb{R}^1$ | $\mathbb{R}^3$ | Zero-set embedding (Section 4.3.3) | `beta_to_zlv`, `mu_to_zlv` |
-| $\mathbb{R}^3$ | $\mathbb{R}^5$ | Lifting (Section 4.3.2) | `lv_to_lver` |
+| $\mathbb{R}^2$ | $\mathbb{R}^5$ | EP constraint generation (Section 4.3.4) | `ep_to_lver` |
+| $\mathbb{R}^1$ | $\mathbb{R}^3$ | Beta/Mu zero-set embedding (Section 4.3.3) | `beta_to_zlv`, `mu_to_zlv` |
+| $\mathbb{R}^3$ | $\mathbb{R}^5$ | LV/ZLV lifting (Section 4.3.2) | `lv_to_lver` |
 
-Note that $\mathbb{R}^4$ is absent.  The coordinate $s$ always appears
-jointly with $(\sigma, \tau, \rho, \rho^*)$; there is no four-dimensional
-stage in the pipeline.
+The 2D stage thus appears only in the ascending direction: the EP hull
+$\mathcal{C}_{\mathrm{EP}}$ and the mu hull $\mathcal{C}_\mu$ are
+rational polygons in $\mathbb{R}^2$ whose vertices generate
+constraints on $\mathcal{P}$; they are neither sources nor targets in
+the descending chain.  Similarly, the beta envelope lives in
+$\mathbb{R}^1$ (as a function of $\alpha$) but flows *upward* into the
+ZLV stage rather than being a downward-ladder object.
+
+Note that $\mathbb{R}^4$ is absent from both the descending and
+ascending collections.  The coordinate $s$ always appears jointly with
+$(\sigma, \tau, \rho, \rho^*)$; there is no four-dimensional stage in
+the pipeline.
 
 **Proposition 7.2** (Strict information loss).
 Each descending map in the ladder is strictly lossy: the target object does
@@ -2691,7 +3053,7 @@ do not propagate upward.  Consequently:
 
 ### 7.2 The Duality Web
 
-Three dualities organize the X5D-EXPDB signature.  Each exchanges a "primal" object
+Three dualities organize the X5D signature.  Each exchanges a "primal" object
 with a "dual" object of the same or different type.
 
 #### 7.2.1 EP $\leftrightarrow$ Beta: Point-Line Duality
@@ -2752,6 +3114,21 @@ LVER constraints (Section 4.3.4), which couple $\rho$ and $\rho^*$ through
 $s$.  When these constraints are trivial, the gap vanishes and the 3D
 pipeline (Routes 1–2 of Section 5.6) is as powerful as the 5D pipeline
 (Route 3).
+
+**[Figure 10: The LV ↔ LVER section–projection adjunction.**
+*A commutative-diagram-style figure.*  Top row: a box labelled
+$\mathcal{P} \subset \mathbb{R}^5$; a downward arrow labelled
+$\pi_{\{0,1,2\}}$ pointing to a box labelled $R_{\mathrm{LV}} \subset
+\mathbb{R}^3$.  Bottom row: the same two boxes with an upward arrow
+labelled $\mathrm{lift}$ from $R_{\mathrm{LV}}$ to
+$\mathrm{lift}(R_{\mathrm{LV}}) \subset \mathbb{R}^5$.  Between the
+upper-right $\mathcal{P}$ and the lower-right $\mathrm{lift}(\pi(\mathcal{P}))$,
+show an explicit containment arrow $\mathcal{P} \subseteq \mathrm{lift}(\pi(\mathcal{P}))$
+with a shaded "adjunction gap" region between them representing the
+constraints involving $s$ that are lost by projection.  Caption states
+that lifting is the right adjoint of projection, and that the
+adjunction gap quantifies the information content of the direct LVER
+and EP-derived constraints.]**
 
 #### 7.2.3 EP $\leftrightarrow$ Mu: Linear Isomorphism
 
@@ -2854,6 +3231,23 @@ that interpolates between the known EP points.  After finitely many
 iterations (bounded by `search_depth`), the set of hull vertices stabilizes
 up to the resolution imposed by the rational arithmetic.
 
+**[Figure 11: The EP ↔ Beta feedback loop and the A/B/C orbit
+structure.**
+*A two-panel figure.*  *Left panel:* a circular flow diagram showing
+the iteration $\mathcal{C}_{\mathrm{EP}} \to \beta^* \to
+\mathcal{C}_{\mathrm{EP}}' \to \beta^{*\prime} \to \cdots$ with arrows
+labelled "tangent lines", "hull edges", "A, B, C transforms".  *Right
+panel:* a 2D $(k, l)$-plot showing an initial EP point (large dot),
+the attractor point $(0, 1/2)$ (star), and a finite orbit of 10–15
+successive images under the A-process (small dots) contracting toward
+the attractor.  The B-process action is shown as a reflection arrow
+across the line $l = k + 1/2$ sending a sample point to its image.
+The C-process is shown contracting toward $(0, 11/12)$, with a dashed
+arrow indicating the subsequent A-application pulling that image back
+toward $(0, 1/2)$.  Caption notes that the semigroup $\langle A, B, C\rangle$
+has unique global attractor $(0, 1/2)$.]**
+
+
 #### 7.3.2 The LVER $\to$ LV $\to$ LVER loop
 
 This loop is present in the pipeline architecture but is executed as a
@@ -2881,16 +3275,40 @@ $$
 \;\to\; \cdots
 $$
 
-In practice, the loop stabilizes after a single pass because the projection
-$\pi_{\{0,1,2\}}(\mathcal{P})$ already incorporates all available LVER
-constraints.  Iterating would only re-derive the same LV region (the
-intersection is idempotent, and the projection of the intersection equals
-the intersection of the projections when all constraints are included).
+In practice, the loop stabilizes after a single pass.  The reason is
+*not* that projection commutes with intersection in general — it does
+not — but that the second pass can produce no constraint that was not
+already present in $\mathcal{P}$ on the first pass.  Specifically, let
+$\mathcal{P}_1 = \mathcal{P}$ be the master region built from the
+initial literature constraints $\mathcal{C}_{\mathrm{lit}}$ (including
+the direct LVER constraints, the lifted LV and ZLV constraints, and the
+EP-derived constraints).  Let $\mathrm{LV}' = \pi_{\{0,1,2\}}(\mathcal{P}_1)$,
+and form $\mathcal{P}_2$ by re-intersecting with $\mathrm{lift}(\mathrm{LV}')$
+in addition to $\mathcal{C}_{\mathrm{lit}}$.  The crucial observation is
+that every half-space defining $\mathrm{lift}(\mathrm{LV}')$ is already
+implied by $\mathcal{C}_{\mathrm{lit}}$: by the defining property of
+projection,
+$$
+\mathcal{P}_1 \subseteq \pi_{\{0,1,2\}}^{-1}\bigl(\pi_{\{0,1,2\}}(\mathcal{P}_1)\bigr)
+= \mathrm{lift}(\mathrm{LV}'),
+$$
+so intersecting with $\mathrm{lift}(\mathrm{LV}')$ does not shrink
+$\mathcal{P}_1$.  Hence $\mathcal{P}_2 = \mathcal{P}_1$, and by induction
+the loop fixes on the first pass.
+
+The general identity "projection commutes with intersection" is *false*
+(projections can lose cross-coordinate constraints, as illustrated by
+Remark 5.1).  What is true here is the weaker and more specific fact
+that the lift of a projection contains the original region, which
+suffices to force a one-step fixed point in the LVER $\to$ LV $\to$ LVER
+loop.  This specific feature does not extend, for example, to the
+LVER $\to$ energy $\to$ LVER loop analogue unless the direct LVER
+constraints happen to be jointly compatible with such a lift.
 
 
 ### 7.4 Fixed Points and Attractors
 
-The X5D-EXPDB $\Sigma^*$ is the fixed point of the pipeline operator $\Phi$
+The X5D $\Sigma^*$ is the fixed point of the pipeline operator $\Phi$
 (Theorem 6.6).  We now describe the fixed-point structure at each level of
 the dimension ladder.
 
@@ -2986,10 +3404,27 @@ $\sigma > 1/2$ (the density hypothesis) and of $\theta$ (the prime gap
 exponent) are reflections, in dimension 1 and dimension 0 respectively, of
 the EP attractor at dimension 2.
 
+**[Figure 12: The fixed-point hierarchy.**
+*A vertical cascade diagram.*  Five boxes stacked top to bottom, one
+per level of the dimension ladder: (top) EP attractor $(0, 1/2) \in
+\mathbb{R}^2$; Beta attractor $\beta(\alpha) = \alpha/2 \in \mathbb{R}^1$;
+ZLV attractor $\{\rho = 0\} \subset \mathbb{R}^3$; $\mathcal{P}$
+attractor $\mathcal{P}_\infty \subset \mathbb{R}^5$; ZD attractor
+$A(\sigma) \equiv 0 \in \mathbb{R}^1$; (bottom) scalar attractor
+$\theta = 0 \in \mathbb{R}^0$.  Downward arrows between consecutive
+boxes are labelled with the descending map (tangent line duality,
+zero-set embedding, lifting, projection + rational supremum,
+supremum).  A side note for each level shows the "current best" next
+to the "attractor" (e.g., $\mathcal{C}_{\mathrm{EP}}^*$ vs. $(0, 1/2)$;
+$\theta^* \approx \text{current}$ vs. $\theta_\infty = 0$).  Caption
+connects each attractor to a classical conjecture (density hypothesis,
+Lindelöf hypothesis, prime gap conjecture) and states that all are
+reflections of the EP attractor at different levels.]**
+
 
 ### 7.5 Sensitivity Structure
 
-We conclude by describing how the X5D-EXPDB signature responds to perturbations of
+We conclude by describing how the X5D signature responds to perturbations of
 the axiom set.
 
 **Definition 7.4** (Marginal value of a hypothesis).
@@ -3028,7 +3463,7 @@ $\square$
 This sparsity has a practical consequence: the dependency-tracking mechanism
 in EXPDB (the `dependencies` attribute and the `track_dependencies` flag in
 the distributive-law intersection) identifies precisely which literature
-results are load-bearing for the final bound $\theta$.  The X5D-EXPDB
+results are load-bearing for the final bound $\theta$.  The X5D
 framework interprets this tracking geometrically: a hypothesis is
 load-bearing if and only if it contributes a half-space to $\mathcal{P}$
 that is active (i.e., the half-space's bounding hyperplane intersects
@@ -3044,342 +3479,25 @@ and for understanding which literature results are truly essential.  The
 (Section 3.1) provide heuristic proxies for this; the X5D framework
 provides the exact geometric criterion.
 
-## 8. Comparison with the Factor Skyline
-
-The Erdős–Tao factorization project [ET] addresses a different problem in
-number theory — the factorization of $N!$ into large factors — using a
-computational pipeline that bears structural resemblance to EXPDB.  In this
-section we compare the two frameworks, identify their common geometric
-substrate, and discuss the prospects for unification.  The comparison is
-structural, not mathematical: we treat both systems as polyhedral
-computation engines and ask how their architectures relate.
-
-
-### 8.1 The Factor Problem
-
-The Erdős–Tao project studies the following question: given integers $N$ and
-$T$, express $N!$ as a product of factors each at least $T$.  The goal is to
-maximize the number of such factors (equivalently, to minimize the residual
-that cannot be decomposed into factors $\ge T$).  The problem is
-parameterized by the ratio $T/N$ and has a rich asymptotic structure as
-$N \to \infty$.
-
-The computational approach proceeds as follows:
-
-1. **Sieve.**  Compute the prime factorization of $N!$: for each prime
-   $p \le N$, the exponent of $p$ in $N!$ is $\sum_{i \ge 1} \lfloor N/p^i
-   \rfloor$.
-
-2. **Smooth decomposition.**  Identify which integers $j \in [T, N]$ are
-   *$P$-smooth* (all prime factors $\le P$) for a suitable smoothness bound
-   $P$.  Each smooth $j$ has a known prime factorization in terms of small
-   primes.
-
-3. **Linear program.**  Construct an LP whose variables $x_j$ represent the
-   multiplicity of factor $j$ in the decomposition.  The constraints enforce
-   that the total usage of each prime $p$ does not exceed its exponent in
-   $N!$:
-   $$
-   \sum_{j \ge T} f_{j,p}\, x_j \;\le\; c_p
-   \qquad\text{for each prime } p \le P
-   $$
-   where $f_{j,p}$ is the exponent of $p$ in $j$ and $c_p$ is the exponent
-   of $p$ in $N!$.  The objective is $\max \sum_j x_j$.
-
-4. **Dual certificate.**  Extract the dual variables $\pi_p$ (one per prime
-   constraint) to certify an upper bound on the number of factors.  The dual
-   feasibility condition is $\sum_p \pi_p f_{j,p} \ge 1$ for each
-   $j \in [T, N]$, and the dual objective is $\sum_p \pi_p c_p$.
-
-5. **Rounding and verification.**  Round the LP solution to integers and
-   verify that the resulting factorization is valid.
-
-This pipeline — sieve, LP, dual certificate, rounding — is the Factor
-X5D analogue of EXPDB's pipeline of axiom seeding, constraint
-intersection, projection, and envelope extraction.
-
-
-### 8.2 Structural Parallels
-
-We identify five structural parallels between the two systems.
-
-#### 8.2.1 Polyhedral feasible region
-
-Both systems operate on a polyhedral feasible region defined by rational
-half-spaces.
-
-| Feature | X5D-EXPDB | Factor Skyline |
-|---------|--------------|----------------|
-| Ambient dimension | 5 (fixed: $\sigma, \tau, \rho, \rho^*, s$) | $N - T + 1$ (variable: one dimension per potential factor $j$) |
-| Number of constraints | $O(\text{literature results} \times \text{rescalings})$ | $O(\pi(P))$ (one per small prime) |
-| Coefficient field | $\mathbb{Q}$ (exact rational arithmetic via `pycddlib`) | $\mathbb{Q}$ (exact rational arithmetic for certificates; floating-point for LP solving via Gurobi) |
-| Bounding box | Fixed box $\mathcal{B} \subset \mathbb{R}^5$ | Implicitly bounded by $x_j \le c_p / f_{j,p}$ |
-
-In EXPDB, the polytope is low-dimensional (5D) with many constraints.  In
-the Factor Skyline, the polytope is high-dimensional ($N - T + 1$ dimensions)
-with few constraints (one per prime $\le P$).  This is a fundamental
-geometric difference: EXPDB's master polytope $\mathcal{P}$ has far more
-facets than vertices, while the Factor LP polytope has far more vertices
-than facets.
-
-#### 8.2.2 Axioms as half-spaces
-
-Both systems begin with a collection of "axioms" that are encoded as
-half-space constraints.
-
-| | EXPDB | Factor |
-|---|------|--------|
-| Axiom source | Published literature results | Prime factorization of $N!$ |
-| Axiom form | $a_0 + a_1\sigma + a_2\tau + a_3\rho + a_4\rho^* + a_5 s \ge 0$ | $\sum_j f_{j,p}\, x_j \le c_p$ |
-| Axiom count | Tens to low hundreds | $\pi(P)$ (hundreds to thousands) |
-| Axiom type | Heterogeneous (different hypothesis types) | Homogeneous (one prime constraint per prime) |
-
-In EXPDB, axioms are heterogeneous and their geometric meaning varies by
-type.  In the Factor Skyline, axioms are homogeneous: every constraint has
-the same structure (prime budget).
-
-#### 8.2.3 Monotone contraction
-
-Both systems define a monotone operator on their respective feasible
-regions.
-
-In EXPDB: adding a new literature result adds a half-space, shrinking
-$\mathcal{P}$.  The operator $\Phi$ is a contraction (Theorem 6.5).
-
-In the Factor Skyline: increasing $N$ (with $T$ scaling proportionally) adds
-new prime constraints and new factor variables.  The LP value (maximum number
-of factors, normalized by $N$) is a monotone function of the constraint
-matrix.  The dual certificate provides an upper bound that descends as the
-LP is tightened.
-
-#### 8.2.4 Duality
-
-Both systems exhibit a primal-dual structure.
-
-In EXPDB: the EP $\leftrightarrow$ Beta duality (Section 7.2.1) exchanges
-points with tangent lines.  The LV $\leftrightarrow$ LVER adjunction
-(Section 7.2.2) exchanges projected regions with lifted regions.
-
-In the Factor Skyline: the primal LP (factor multiplicities $x_j$) is dual
-to the certificate LP (prime valuations $\pi_p$).  The dual variables $\pi_p$
-assign a "cost" to each prime, and the dual feasibility condition
-$\sum_p \pi_p f_{j,p} \ge 1$ states that every factor $j \ge T$ has total
-prime cost at least 1.  This is a classical LP duality, not a projective
-duality, but it serves an analogous role: it provides the certificate that
-bounds the objective.
-
-#### 8.2.5 Dimensional reduction to a scalar
-
-Both systems ultimately extract a single scalar from a high-dimensional
-polyhedral object.
-
-| | EXPDB | Factor |
-|---|------|--------|
-| Input dimension | 5 | $N - T + 1$ |
-| Output | $\theta$ (prime gap exponent) | $f(N, T) / N$ (factor density) |
-| Reduction mechanism | Projection → rational supremum → envelope → scalar supremum | LP objective → dual bound → rounding |
-| Intermediate objects | 3D regions, 1D piecewise-rational functions | Dual variables $\pi_p$, reduced costs |
-
-
-### 8.3 Structural Differences
-
-Despite the parallels, the two systems differ in fundamental geometric ways.
-
-#### 8.3.1 Fixed vs. variable dimension
-
-EXPDB operates in a fixed ambient dimension ($\mathbb{R}^5$) regardless of
-the number of literature results.  Adding a new result adds a constraint to
-the same 5D space.  The Factor Skyline operates in a dimension that grows
-with the problem size ($N - T + 1$).  This makes the Factor LP
-fundamentally harder to visualize but amenable to LP solvers that scale with
-dimension.
-
-#### 8.3.2 Iterative flow vs. single LP
-
-EXPDB's pipeline is an *iterative flow* with feedback loops (EP
-$\leftrightarrow$ Beta) and a multi-stage cascade (Section 7.3).  The
-Factor Skyline is a *single-shot LP*: once the constraint matrix is
-assembled, the LP solver finds the optimum in one call.  There is no
-iterative refinement or feedback.
-
-The greedy algorithm (`greedy.py`) provides an alternative to the LP, but
-it is a heuristic primal method, not an iterative flow in the X5D sense.
-
-#### 8.3.3 Non-convex regions vs. convex polytope
-
-EXPDB's master region $\mathcal{P}$ is a disjoint union of convex polytopes
-(Proposition 4.4) — a non-convex region.  The non-convexity arises from the
-`from_union_of_halfplanes` construction, which represents sub-level sets of
-pointwise maxima of affine functions.  The Factor LP polytope is a single
-convex polytope (the intersection of half-spaces defining the LP feasible
-region).
-
-#### 8.3.4 Exact projection vs. LP relaxation
-
-EXPDB computes exact projections (via vertex enumeration in `pycddlib`) and
-exact envelopes (via algebraic root-finding in `sympy`).  All intermediate
-results are exact rational numbers.
-
-The Factor Skyline uses floating-point LP solving (via Gurobi) with
-post-hoc rational certificate verification.  The LP solution is
-floating-point; the dual variables are rounded to rationals; and a separate
-verification step (`verify.py`) checks that the rounded certificate is
-valid.  This hybrid exact/approximate approach is necessitated by the high
-dimension of the LP.
-
-#### 8.3.5 Proof structure
-
-EXPDB produces machine-readable proofs as dependency DAGs
-(Section 3.1).  Each derived hypothesis carries a dependency set, and the
-full proof is a tree whose leaves are literature citations.  The system
-interfaces with Lean 4 for formal verification.
-
-The Factor Skyline produces dual certificates: a vector $(\pi_p)$ of
-rational dual variables that certify an upper bound.  The certificate is
-verifiable by a finite check ($\sum_p \pi_p f_{j,p} \ge 1$ for each $j$),
-but it is not structured as a dependency tree.  There is no formal
-verification interface (though the rational rounding in `facfac.py` provides
-a rigorous bound when the dual variables are monotone).
-
-
-### 8.4 A Common Abstraction
-
-Despite these differences, both systems can be described in a common
-abstract framework.
-
-**Definition 8.1** (X5D system).
-A *skyline system* is a tuple $(\mathcal{A}, \mathcal{C}, \mathcal{P},
-\pi, \phi)$ where:
-
-- $\mathcal{A}$ is a finite set of *axioms* (literature results or prime
-  factorizations).
-- $\mathcal{C}: \mathcal{A} \to \{\text{rational half-spaces in }
-  \mathbb{R}^d\}$ is a *constraint map* that converts each axiom into one
-  or more half-space constraints.
-- $\mathcal{P} = \bigcap_{a \in \mathcal{A}} \mathcal{C}(a) \cap
-  \mathcal{B}$ is the *master region* (the intersection of all constraints
-  within a bounding box $\mathcal{B}$).
-- $\pi: \mathbb{R}^d \to \mathbb{R}^k$ ($k < d$) is a *reduction map*
-  (projection, rational supremum, or LP objective) that extracts a
-  lower-dimensional output from $\mathcal{P}$.
-- $\phi: \mathbb{R}^k \to \mathbb{R}$ is a *scalar extraction* (supremum,
-  lower envelope, or objective evaluation) that produces the final bound.
-
-The *skyline* is the boundary $\partial\pi(\mathcal{P})$ (or the graph of
-$\phi \circ \pi$), and the *skyline invariant* is the scalar
-$\phi(\pi(\mathcal{P}))$.
-
-| Component | EXPDB instantiation | Factor instantiation |
-|-----------|-------------------|---------------------|
-| $\mathcal{A}$ | Literature hypothesis set $\mathcal{H}_0$ | Prime factorization $\{(p, c_p)\}$ |
-| $\mathcal{C}$ | Sections 4.3.1–4.3.5 | $\sum_j f_{j,p} x_j \le c_p$ |
-| $\mathcal{P}$ | Master region $\mathcal{P} \subset \mathbb{R}^5$ | LP feasible region $\subset \mathbb{R}^{N-T+1}$ |
-| $d$ | 5 | $N - T + 1$ |
-| $\pi$ | $\pi_{\{0,1,2\}} \circ \Phi_{\rho/\tau} \circ \mathrm{env}^-$ | LP objective $\sum_j x_j$ |
-| $\phi$ | $\sup_\sigma \max(\alpha, \beta)$ | Identity (the LP value is the scalar) |
-| X5D-EXPDB | Stratified boundary (Section 6.9) | Upper boundary of LP polytope |
-
-Both systems satisfy the *skyline monotonicity property*: adding an axiom
-(a new literature result or a new prime constraint) can only tighten the
-master region and hence can only improve the final bound.
-
-Both systems satisfy the *skyline rationality property*: all vertices of
-$\mathcal{P}$, and hence all boundary objects in the skyline, are
-representable over $\mathbb{Q}$.
-
-
-### 8.5 Toward Unification
-
-The common abstraction of Section 8.4 suggests several directions for
-bringing the two frameworks closer together.
-
-#### 8.5.1 Shared computational infrastructure
-
-Both systems rely on rational polyhedral computation: `pycddlib` in EXPDB,
-Gurobi with rational certificate rounding in the Factor Skyline.  A
-shared infrastructure layer — providing exact LP solving, projection,
-vertex enumeration, and certificate generation over $\mathbb{Q}$ — would
-benefit both projects.  The `pycddlib` library, already used in EXPDB,
-could in principle replace Gurobi for the Factor LP when the dimension is
-small enough, providing exact solutions without the need for
-floating-point rounding.
-
-#### 8.5.2 Proof certificates as geometric objects
-
-In EXPDB, the proof of a bound is a dependency DAG rooted at the literature.
-In the Factor Skyline, the proof is a dual certificate $(\pi_p)$.  Both can
-be understood as *witnesses for the emptiness of the complement*:
-
-- In EXPDB, the proof witnesses that no five-tuple
-  $(\sigma, \tau, \rho, \rho^*, s)$ outside $\mathcal{P}$ is consistent with
-  the axioms.
-- In the Factor Skyline, the dual certificate witnesses that no assignment
-  $x_j$ exceeding the LP value is feasible.
-
-A unified proof format would represent both as certificates of infeasibility
-for the complement region, expressible as linear combinations of the
-defining half-spaces (a Farkas-type certificate).
-
-#### 8.5.3 Iterative refinement for the Factor LP
-
-The Factor Skyline currently solves a single LP.  One could introduce an
-iterative structure analogous to EXPDB's feedback loops: solve the LP,
-extract dual variables, use them to generate new constraints (e.g.,
-Gomory cuts or column generation), and re-solve.  This would make the Factor
-pipeline a genuine iterative flow with a convergence theorem analogous to
-Theorem 6.6.
-
-#### 8.5.4 Dimensional reduction for EXPDB
-
-Conversely, EXPDB could benefit from LP-based techniques.  The rational
-supremum $\Phi_{\rho/\tau}$ (Section 2.6) is equivalent to a parametric
-linear-fractional program over the polytope pieces of $\mathcal{P}$.  Modern
-LP solvers could potentially compute this more efficiently than the current
-vertex-enumeration approach, especially if the number of polytope pieces is
-large.
-
-#### 8.5.5 A common formal language
-
-Both systems produce numerical bounds that could in principle be formally
-verified.  EXPDB already interfaces with Lean 4; the Factor Skyline produces
-rational certificates that are amenable to formal verification.  A common
-formalization — expressing both skyline systems in a single proof assistant
-framework — would provide a unified foundation for verified computational
-number theory.
-
-
-### 8.6 Summary
-
-The X5D-EXPDB and the Factor Skyline are instantiations of the same
-abstract pattern: a polyhedral feasible region defined by rational axioms,
-reduced to a scalar bound by a chain of geometric operations, with a
-monotonicity guarantee that ensures the bound improves as axioms accumulate.
-They differ in dimension (fixed 5D vs. variable high-D), in iteration
-structure (multi-stage flow vs. single LP), in convexity (non-convex region
-vs. convex polytope), and in proof format (dependency DAG vs. dual
-certificate).  The common abstraction (Definition 8.1) provides a framework
-for potential unification, and the shared reliance on rational polyhedral
-computation suggests practical opportunities for cross-pollination.
-
-## 9. Discussion and Future Directions
+## 8. Discussion and Future Directions
 
 We have shown that the EXPDB pipeline operates on a single five-dimensional
 polyhedral region $\mathcal{P}$, that all intermediate and final objects are
 projections, envelopes, or scalar extractions of $\mathcal{P}$, and that the
 pipeline is a monotone contraction converging to a unique fixed point — the
-X5D-EXPDB.  In this concluding section we discuss the implications of
+X5D.  In this concluding section we discuss the implications of
 this geometric picture, identify concrete opportunities for improvement, and
 pose open questions.
 
 
-### 9.1 Algorithmic Implications
+### 8.1 Algorithmic Implications
 
 The polyhedral reinterpretation suggests that the tightness of EXPDB bounds
 is governed by two factors: the number and quality of half-spaces defining
 $\mathcal{P}$, and the efficiency of the geometric operations that extract
 downstream bounds.  We address each in turn.
 
-#### 9.1.1 Marginal returns from new literature results
+#### 8.1.1 Marginal returns from new literature results
 
 Each new literature result contributes one or more half-spaces to
 $\mathcal{P}$.  The marginal improvement in the final scalar $\theta$ depends
@@ -3398,7 +3516,7 @@ seeking to improve $\theta$ could examine the active half-spaces, identify
 which boundary face of $\mathcal{P}$ is limiting, and direct analytical
 effort at that face.
 
-#### 9.1.2 The role of the auxiliary coordinate $s$
+#### 8.1.2 The role of the auxiliary coordinate $s$
 
 The coordinate $s$ (index 4) is eliminated by projection in every output
 stage — it never appears in the LV region, the energy region, the ZD
@@ -3420,12 +3538,12 @@ choice of five coordinates is not an arbitrary design decision but reflects
 the current state of available joint constraints in the literature.
 
 
-### 9.2 Specific Improvements to EXPDB
+### 8.2 Specific Improvements to EXPDB
 
 The codebase contains several features marked as unimplemented (`TODO`,
 `NotImplementedError`) that the X5D framework helps to contextualize.
 
-#### 9.2.1 Huxley subdivision
+#### 8.2.1 Huxley subdivision
 
 The function `apply_huxley_subdivision` (`large_values.py`, line 422) is
 declared but raises `NotImplementedError`.  In the X5D framework, Huxley
@@ -3442,7 +3560,7 @@ bounded by the width of the current polytope faces in the $\tau$ direction:
 a face that spans a wide $\tau$-interval may contain an edge with high
 $\rho/\tau$ that could be reduced by subdivision.
 
-#### 9.2.2 Automated $\tau_0$ selection
+#### 8.2.2 Automated $\tau_0$ selection
 
 The splitting parameter $\tau_0$ — which divides the $\tau$ domain between
 the LV range $[\tau_0, 2\tau_0]$ and the ZLV range $[2, \tau_0]$ in the ZD
@@ -3468,7 +3586,7 @@ maximum of all contributing edges.  Since there are finitely many edges
 and each contributes a rational function of $(\sigma, \tau_0)$, the optimal
 $\tau_0(\sigma)$ is piecewise-algebraic and computable.
 
-#### 9.2.3 The B-process for beta bounds
+#### 8.2.3 The B-process for beta bounds
 
 The comment at `bound_beta.py`, line 83 reads: "TODO: create a method to
 implement the B-process for beta bounds."  Currently, the van der Corput
@@ -3482,7 +3600,7 @@ obtained only through the EP $\leftrightarrow$ Beta duality loop.  The
 direct implementation would bypass one round of the feedback loop and
 potentially accelerate convergence.
 
-#### 9.2.4 Lean proof generation
+#### 8.2.4 Lean proof generation
 
 The comment at `hypotheses.py`, line 42 reads: "TODO: add `Lean proof`
 attribute."  The X5D framework suggests a strategy for Lean proof
@@ -3499,19 +3617,19 @@ steps:
    piecewise-rational functions (an algebraic identity, verifiable by
    evaluation at finitely many rational test points).
 
-The modular structure of X5D-EXPDB — axioms $\to$ half-spaces $\to$
+The modular structure of X5D — axioms $\to$ half-spaces $\to$
 intersection $\to$ projection $\to$ envelope $\to$ scalar — decomposes the
 proof obligation into a small number of generic lemmas (valid for any
 polyhedral system) and a larger number of instance-specific axiom
 verifications.
 
 
-### 9.3 Connections to Convex Optimization
+### 8.3 Connections to Convex Optimization
 
 The polyhedral reinterpretation connects EXPDB to the theory of convex
 optimization in several ways.
 
-#### 9.3.1 Parametric linear-fractional programming
+#### 8.3.1 Parametric linear-fractional programming
 
 The rational supremum $\Phi_{\rho/\tau}$ (Definition 2.12) is the optimal
 value of a parametric linear-fractional program: for each fixed $\sigma$,
@@ -3529,7 +3647,7 @@ decomposition.  The parametric LP approach would be particularly advantageous
 when the number of polytope pieces is large (since it works directly in the
 H-representation without computing V-representations).
 
-#### 9.3.2 Sensitivity analysis
+#### 8.3.2 Sensitivity analysis
 
 The dual variables of the parametric LP at each $\sigma$-value identify
 which constraints of $R_{\mathrm{LV}}$ are active (binding) at the optimum.
@@ -3538,58 +3656,55 @@ $\mathcal{P}$ along the optimal projection path.  Standard LP sensitivity
 analysis would quantify the marginal improvement in $\Phi_{\rho/\tau}$
 from tightening each constraint — providing a direct measure of the marginal
 value of each literature hypothesis (Definition 7.4) without requiring the
-full X5D-EXPDB to be recomputed.
+full X5D to be recomputed.
 
-#### 9.3.3 Column generation
+#### 8.3.3 Constraint generation
 
-In the Factor Skyline (Section 8), the LP has many variables (one per
-potential factor) but few constraints (one per prime).  Column generation —
-adding variables dynamically based on the current dual solution — is a
-natural approach.  In EXPDB, the analogous technique would be *constraint
-generation*: dynamically adding half-spaces to $\mathcal{P}$ based on which
-regions of the boundary are limiting.  The raise-to-power transform
-(Section 4.3.5) is already a form of constraint generation: it creates new
-half-spaces (rescaled copies of existing constraints) that tighten
-$\mathcal{P}$ at larger $\tau$ values.
+A natural LP-style technique for EXPDB is *constraint generation*:
+dynamically adding half-spaces to $\mathcal{P}$ based on which regions of
+the boundary are limiting.  The raise-to-power transform (Section 4.3.5)
+is already a form of constraint generation: it creates new half-spaces
+(rescaled copies of existing constraints) that tighten $\mathcal{P}$ at
+larger $\tau$ values.
 
 
-### 9.4 Extensions of the Framework
+### 8.4 Extensions of the Framework
 
-#### 9.4.1 Higher-dimensional master regions
+#### 8.4.1 Higher-dimensional master regions
 
 The current master region lives in $\mathbb{R}^5$.  If new families of
 estimates are discovered that introduce additional parameters beyond
 $(\sigma, \tau, \rho, \rho^*, s)$, the framework extends naturally to
-$\mathbb{R}^{5+k}$ by adding coordinates and constraints.  The X5D-EXPDB
+$\mathbb{R}^{5+k}$ by adding coordinates and constraints.  The X5D
 machinery — intersection, projection, rational supremum, envelope — works
 in any dimension.  The computational cost of vertex enumeration and
 projection grows with dimension, but the structural results (monotonicity,
 contractivity, convergence) hold in any ambient dimension.
 
-#### 9.4.2 Multiple scalar outputs
+#### 8.4.2 Multiple scalar outputs
 
 The current pipeline terminates in a single scalar $\theta$.  The framework
 could accommodate multiple scalar outputs — e.g., prime gap bounds at
 different exponents, or bounds on different number-theoretic quantities —
 by defining multiple reduction maps from $\mathcal{P}$.  Each reduction
 map would produce its own 1D envelope, and the collection of all such
-envelopes would form an *extended X5D-EXPDB*.
+envelopes would form an *extended X5D*.
 
-#### 9.4.3 Time-varying X5D-EXPDB signatures
+#### 8.4.3 Time-varying X5D signatures
 
 The literature hypothesis set $\mathcal{H}_0$ grows over time as new results
-are published.  The X5D-EXPDB signature $\Sigma^*(\mathcal{H}_0)$ is a monotone function
+are published.  The X5D signature $\Sigma^*(\mathcal{H}_0)$ is a monotone function
 of $\mathcal{H}_0$ (Proposition 6.12): as the literature expands, the
-signature tightens.  One could define the *X5D-EXPDB trajectory*
-$\{\Sigma^*(t)\}_{t \ge 1920}$ as the X5D-EXPDB signature evaluated on the hypothesis
+signature tightens.  One could define the *X5D trajectory*
+$\{\Sigma^*(t)\}_{t \ge 1920}$ as the X5D signature evaluated on the hypothesis
 set available at time $t$.  This trajectory is a descending path in the
 state lattice $\mathcal{L}$ and provides a quantitative history of progress
 in the field — a "computational time series" of analytic number theory.
 
 
-### 9.5 Open Questions
+### 8.5 Open Questions
 
-We conclude with five open questions that the X5D framework raises.
+We conclude with four open questions that the X5D framework raises.
 
 **Question 1** (Finite determination).
 *Is the X5D fixed point $\Sigma^*$ determined by finitely many
@@ -3613,7 +3728,7 @@ case, a polytope in $\mathbb{R}^5$ with $n$ facets can have
 $O(n^{\lfloor 5/2 \rfloor}) = O(n^2)$ vertices (by the upper bound theorem
 for polytopes).  Does the specific structure of EXPDB constraints yield a
 better bound?  The answer would determine the computational complexity of
-the X5D-EXPDB signature computation.
+the X5D signature computation.
 
 **Question 3** (Algebraic fixed point).
 *Can the EP $\leftrightarrow$ Beta feedback loop be replaced by a single
@@ -3640,26 +3755,6 @@ $[\frac{1}{2}, 1]$.  Without knowledge of $\Sigma_\infty$, one could
 define a *gap metric* based on the difference between the primal bound
 (the computed $\theta$) and a conjectured lower bound (if available).
 
-**Question 5** (Universality).
-*Is the skyline system abstraction (Definition 8.1) the right level of
-generality?*
-
-We have shown that both EXPDB and the Factor Skyline instantiate the
-pattern: axioms $\to$ half-spaces $\to$ master region $\to$ reduction $\to$
-scalar.  Are there other computational systems in number theory (or beyond)
-that fit this pattern?  Candidates include:
-
-- The Polymath projects that use LP or semidefinite relaxations to derive
-  bounds (e.g., bounds on gaps between primes, bounds on cap sets).
-- Automated theorem provers that search over polyhedral feasible regions
-  (e.g., sum-of-squares hierarchies in real algebraic geometry).
-- The theory of Newton polytopes in algebraic geometry, where the polytope
-  of a polynomial controls its asymptotic behavior.
-
-A positive answer would suggest that the skyline system is a natural
-computational primitive for a broad class of mathematical optimization
-problems.
-
 ## Appendix A. Mapping Code Modules to Geometric Operations
 
 This appendix provides a complete reference mapping from the EXPDB source
@@ -3668,6 +3763,23 @@ objects defined in the paper.  It is intended for readers who wish to
 trace every structural claim back to the implementation.
 
 All line numbers refer to the EXPDB repository at commit `af351a3`.
+
+**[Figure 13: Code-to-geometry mapping overview.**
+*A bipartite "sankey-style" diagram linking the EXPDB source code
+layout (left) to the paper's geometric framework (right).  Left side:
+a vertical list of the 24 Python modules grouped by classification
+(Infrastructure, Geometry, Transformation, Propagation, Orchestration,
+Utility) with line counts.  Right side: a vertical list of the paper's
+main geometric objects and operations (Polytope/Region, Affine
+functions, Rational functions, EP hull, Beta envelope, LV region, ZLV
+region, $\mathcal{P}$, ZD envelope, ZDE envelope, $\theta$).  Curved
+connecting ribbons between the two sides show which module(s)
+implement each geometric object, with ribbon thickness proportional to
+lines of code devoted to that object.  The central "bottleneck" of the
+diagram should visually emphasize `additive_energy.py` and
+`compute_best_lver` as the locus where $\mathcal{P}$ is constructed.
+Caption directs the reader to §A.2–A.7 for the detailed
+function-level breakdown.]**
 
 
 ### A.1 Module Inventory
@@ -3812,7 +3924,7 @@ primary geometric role.
 | Beta $\to$ ZLV | §4.3.3 | `beta_to_zlv` | `zeta_large_values.py` | 105 |
 | Mu $\to$ ZLV | §4.3.3 | `mu_to_zlv` | `zeta_large_values.py` | 182 |
 | Bourgain LV optimization | §3.5 | `optimize_bourgain_large_value_estimate` | `large_values.py` | 237 |
-| Huxley subdivision (stub) | §9.2.1 | `apply_huxley_subdivision` | `large_values.py` | 422 |
+| Huxley subdivision (stub) | §8.2.1 | `apply_huxley_subdivision` | `large_values.py` | 422 |
 
 
 ### A.6 Orchestration: Code to Section Mapping
@@ -3832,7 +3944,7 @@ primary geometric role.
 | Best ZD selection | §5.6.5 | `compute_best_zero_density` | `derived.py` | 828 |
 
 
-### A.7 X5D-EXPDB Components: Code to Definition Mapping
+### A.7 X5D Components: Code to Definition Mapping
 
 | X5D component | Definition | Construction code | Selection code |
 |-------------------|-----------|-------------------|---------------|
@@ -3868,8 +3980,6 @@ primary geometric role.
 - [TTY25] T. Tao, T. Trudgian, A. Yang, "New exponent pairs, zero density
   estimates, and zero additive energy estimates: a systematic approach,"
   arXiv:2501.16779, 2025.
-
-- [ET] (Factor Skyline reference — to be completed.)
 
 - [F] K. Fukuda, `cddlib` / `pycddlib`: An implementation of the double
   description method for polyhedral computation.
